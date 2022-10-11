@@ -5,12 +5,10 @@ import "./NiitERC20.sol";
 contract Staking{
     mapping(address => Staker) stakerToStakes;
     address BondDepositoryAddress;
-    address NiitAddress;
     address VaultAddress;
     uint96 constant minStakePeriod = 7 days;
 
     BondDepository BondContract;
-    NiitERC20 NiitContract;
 
      struct UserBonds{
         uint256 id,
@@ -28,7 +26,6 @@ contract Staking{
 
     constructor (address _BondDepositoryAddress, address _NiitAddress, address _vaultAddress){
         BondContract = BondDepository(_BondDepositoryAddress);
-        NiitContract = NiitERC20(NiitAddress);
         VaultAddress = _VaultAddress;
     }
     function stakeFromMatureBonds() external{
@@ -38,11 +35,11 @@ contract Staking{
        UserBonds bond = BondContract.fetchExistingUserBond(msg.sender);
        uint256 amountToStake = bond.tokenAmountToBeGotten;
         _stake(amountToStake);
-        //delete bonds from user
+        BondContract.deleteBondAfterStake(msg.sender);
 
     }
-    function stake(uint256 _amount){
-        require(NiitContract.transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed')
+    function stake(uint256 _amount, address NiitAddress){
+        require(NiitERC20(NiitAddress).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed')
         _stake(_amount);
     }
 
@@ -76,7 +73,7 @@ contract Staking{
         require (o.currentStake >= _amount, 'Er4: Stake balance less than request amount');
         o.currentStake -= _amount;
         o.lastTimeStake = uint96(block.timestamp);
-        // mint tokens for user
+        MintFromStake()
     }
 
     // This function checks the compounded balance for each staker

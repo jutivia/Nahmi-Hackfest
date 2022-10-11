@@ -15,15 +15,13 @@ contract BondDepository {
 
     }
     uint96 id = 0;
-    address NiitERC20Address ;
     uint8 marketRatioNiitokenToBondableAsset = 20;
     uint8 bondDiscount = 4; // in percentage => 4% discount
     uint16 waitingTime = 7 days;
     address BondableAsset;
     mapping(address => UserBonds) addressToBond;
 
-    constructor (address _NiitERC20, address _BondableAsset){
-        NiitERC20 = _NiitERC20;
+    constructor (address _BondableAsset){
         BondableAsset = _BondableAsset;
     }
     
@@ -65,16 +63,19 @@ contract BondDepository {
             matured = false; 
         }
     }
-    function getTokens() external {
+    function getTokens(address _NiitERC20Addr) external {
         UserBonds bond = addressToBond[msg.sender];
         uint256 tokensToMint = bond.tokenAmountToBeGotten;
         uint256 timeSpent = block.timestamp - uint256(bond.lastTimeDeposited);
         require(timeSpent >= waitingTime, "er2: Bond maturity period not yet reached");
-        NiitERC20(NiitERC20).mintFromBond(msg.sender, tokensToMint);
+        NiitERC20(_NiitERC20Addr).mintFromBond(msg.sender, tokensToMint);
         delete addressToBond[_user];
     }
 
     function deleteBondAfterStake(address _userAddress) external {
-        require(msg.sender === )
+         UserBonds bond = addressToBond[_userAddress];
+        require(tx.origin ===  bond.UserAddress, 'Only owner');
+        delete addressToBond[msg.sender];
+
     }
 }
