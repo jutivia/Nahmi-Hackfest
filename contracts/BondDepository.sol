@@ -16,28 +16,39 @@ contract BondDepository {
 
     }
     uint96 id = 0;
-    uint8 market_Ratio_Niitoken_To_Bondable_Asset = 20;
-    uint8 bondDiscount = 4; // in percentage => 4% discount
-    uint96 waitingTime = 7 days;
     address BondableAsset;
+    uint96 market_Ratio_Niitoken_To_Bondable_Asset = 20;
     address owner;
+    uint96 bondDiscount = 4; // in percentage => 4% discount
     address vaultAddress;
+    uint96 waitingTime = 7 days;
+    address stakingContractAddr;
+    address NiitERC20Addr;
     mapping(address => UserBonds) addressToBond;
 
     constructor (){
        owner = msg.sender;
     }
-    function setBondableAsset(address _BondableAsset) external {
+    modifier onlyOwner(){
         require(msg.sender == owner, "Er1: Only owner");
+        _;
+    }
+    function setBondableAsset(address _BondableAsset) external onlyOwner{
+        
          BondableAsset = _BondableAsset;
     }
 
-    function setVaultAddress (address _vaultAddress) external {
-        require(msg.sender == owner, "Er1: Only owner");
+    function setVaultAddress (address _vaultAddress) external onlyOwner {
         vaultAddress = _vaultAddress;
     }
-    
-    function deposit(uint256 _amount, address _user) external{
+    function setNiitERC20Addr (address _NiitERC20Addr) external onlyOwner{
+        NiitERC20Addr = _NiitERC20Addr;
+    }
+
+    function setStakingContractaddr (address _stakingContractAddr) external onlyOwner{
+        stakingContractAddr = _stakingContractAddr;
+    }
+    function deposit(uint256 _amount, address _user) external {
        require(_amount > 2000, "Er2: Bond amount too low");
        require(AssetToken(BondableAsset).transferFrom(_user, vaultAddress, _amount), 'Er3: Asset deposit failed');
        UserBonds storage bond  = addressToBond[_user];
@@ -74,19 +85,22 @@ contract BondDepository {
             matured = true; 
         }
     }
-    function getTokens(address _NiitERC20Addr) external {
+    function getTokens() external {
         UserBonds storage bond = addressToBond[msg.sender];
         uint256 tokensToMint = bond.token_Amount_To_Be_Gotten;
         require(tokensToMint > 0, "Er4: No funds to withdraw ");
         uint256 timeSpent = block.timestamp - uint256(bond.lastTimeDeposited);
         require(timeSpent >= waitingTime, "Er5: Bond maturity period not yet reached");
-        NahmiiERC20Token(_NiitERC20Addr).mintFromBond(msg.sender, tokensToMint, bond.id);
+        NahmiiERC20Token(NiitERC20Addr).mintFromBond(msg.sender, tokensToMint, bond.id);
         delete addressToBond[msg.sender];
     }
 
+    // Allows Users to delete bond after staking.
+    // To be called using the 
     function deleteBondAfterStake(address _userAddress) external {
+        require(msg.sender == stakingContractAddr, "Er6: Only Staking contract");
          UserBonds storage bond = addressToBond[_userAddress];
-        require(tx.origin ==  bond.UserAddress, 'Er6: Only owner');
+        require(tx.origin ==  bond.UserAddress, 'Er7: Only owner');
         delete addressToBond[_userAddress];
 
     }

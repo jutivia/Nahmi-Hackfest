@@ -9,8 +9,6 @@ import "./Vault.sol";
 
 contract AssetToken is ERC20 {
     using SafeMath for uint256;
-
-    uint96 marketRatioBondableAssetToNii = 4;
     address ValutAddress;
 
     constructor(address _vaultAddress)
@@ -19,9 +17,7 @@ contract AssetToken is ERC20 {
         ValutAddress = _vaultAddress;
     }
 
-    // 4 Nii = 1 BondableAsset
     function mint(address account_, uint256 amount) external payable {
-        // uint256 amountToMint = msg.value/marketRatioBondableAssetToNii;
         _mint(account_, amount);
     }
 

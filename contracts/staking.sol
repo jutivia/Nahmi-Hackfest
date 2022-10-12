@@ -6,16 +6,11 @@ contract Staking{
     mapping(address => Staker) stakerToStakes;
     address BondDepositoryAddress;
     address VaultAddress;
+    address NiitERC20Addr;
+    address owner;
     uint96 constant minStakePeriod = 7 days;
 
     BondDepository BondContract;
-
-     struct UserBonds{
-        uint256 id;
-        address UserAddress;
-        uint96 lastTimeDeposited;
-        uint256 tokenAmountToBeGotten;
-    }
 
     struct Staker{
         address owner;
@@ -27,6 +22,14 @@ contract Staking{
     constructor (address _BondDepositoryAddress, address _vaultAddress){
         BondContract = BondDepository(_BondDepositoryAddress);
         VaultAddress = _vaultAddress;
+        owner = msg.sender;
+    }
+    modifier onlyOwner(){
+        require(msg.sender == owner, "Er1: Only owner");
+        _;
+    }
+     function setNiitERC20Addr (address _NiitERC20Addr) external onlyOwner{
+        NiitERC20Addr = _NiitERC20Addr;
     }
 
     function stakeFromMatureBonds() external{
@@ -38,8 +41,8 @@ contract Staking{
         BondContract.deleteBondAfterStake(msg.sender);
     }
 
-    function stake(uint256 _amount, address NiitAddress) external{
-        require(NahmiiERC20Token(NiitAddress).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed');
+    function stake(uint256 _amount) external{
+        require(NahmiiERC20Token(NiitERC20Addr).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed');
         _stake(_amount);
     }
 
@@ -63,7 +66,7 @@ contract Staking{
     }
 
      // this function re-compounds the staker's stakes if the lastStakedTime is greater than 3 days each time its being called 
-    function withdrawStake (uint _amount,  address NiitAddress) external {
+    function withdrawStake (uint _amount) external {
         Staker storage o = stakerToStakes[msg.sender];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
@@ -73,7 +76,7 @@ contract Staking{
         require (o.currentStake >= _amount, 'Er4: Stake balance less than request amount');
         o.currentStake -= _amount;
         o.lastTimeStake = uint96(block.timestamp);
-        NahmiiERC20Token(NiitAddress).MintFromStake(msg.sender, _amount);
+        NahmiiERC20Token(NiitERC20Addr).MintFromStake(msg.sender, _amount);
     }
 
     // This function checks the compounded balance for each staker

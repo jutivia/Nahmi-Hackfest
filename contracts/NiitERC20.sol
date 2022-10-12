@@ -11,6 +11,7 @@ import './staking.sol';
 contract NahmiiERC20Token is ERC20 {
     using SafeMath for uint256;
 
+    uint96 marketRatioNiiTokenToNii = 100;
     address stakingContractAddr;
     address BondDepo;
     Staking stakingContract;
@@ -22,7 +23,6 @@ contract NahmiiERC20Token is ERC20 {
     // 4 Nii = 1 BondableAsset
 
     // Bonded price => 24 BondableAsset = 1 Niit (4% discount)
-    uint256 marketRatioNiiTokenToNii = 100;
     constructor(address _vaultAddress, address _stakingaddr, address _BondDepo)
         ERC20("NahmiiToken", "Niit", 18)
     {

@@ -66,6 +66,13 @@ describe("Test mining Niit using Nahmii native coin", function () {
         //Setting vault address
         await DeployedBondDepo.setVaultAddress(DeployedVault.address)
 
+        // Setting staking contract addr 
+        await DeployedBondDepo.setStakingContractaddr(DeployedStaking.address);
+
+        // setting the NiiToken contract address 
+        await DeployedBondDepo.setNiitERC20Addr(DeployedNiit.address);
+        await DeployedStaking.setNiitERC20Addr(DeployedNiit.address);
+
         // minting bondable assets for a user
         await DeployedBondable.mint(user2.address, '100000000000000000000')
          expect(await DeployedBondable.balanceOf(user2.address)).to.equal(
@@ -93,7 +100,7 @@ describe("Test mining Niit using Nahmii native coin", function () {
         expect (Number(result.waitingTimeLeft)).to.be.greaterThan(0)
         
         // trying to withdraw niit tokens when bond is not yet mature 
-        await expect( DeployedBondDepo.connect(user2).getTokens(DeployedNiit.address)).to.be.revertedWith(
+        await expect( DeployedBondDepo.connect(user2).getTokens()).to.be.revertedWith(
         "Er5: Bond maturity period not yet reached"
         );
 
@@ -108,11 +115,11 @@ describe("Test mining Niit using Nahmii native coin", function () {
         
         // Should not be able to delete bond except owner 
          await expect(DeployedBondDepo.connect(user1).deleteBondAfterStake(user1.address)).to.be.revertedWith(
-            "Er6: Only owner"
+            "Er6: Only Staking contract"
         );
 
         // Withdraw niit tokens
-         await DeployedBondDepo.connect(user2).getTokens(DeployedNiit.address)
+         await DeployedBondDepo.connect(user2).getTokens()
           expect(await DeployedNiit.balanceOf(user2.address)).to.equal(
         "5200000000000000000"
         );
@@ -120,12 +127,17 @@ describe("Test mining Niit using Nahmii native coin", function () {
         
   });
   it("Should be able to stake tokens received from bond directly ", async function () {
+    // Setting staking address
+        await DeployedBondDepo.setStakingContractaddr(DeployedStaking.address);
         //setting the bondable asset address
         await DeployedBondDepo.setBondableAsset(DeployedBondable.address);
 
         //Setting vault address
         await DeployedBondDepo.setVaultAddress(DeployedVault.address)
 
+         // setting the NiiToken contract address 
+        await DeployedBondDepo.setNiitERC20Addr(DeployedNiit.address);
+        await DeployedStaking.setNiitERC20Addr(DeployedNiit.address);
         // minting bondable assets for a user
         await DeployedBondable.mint(user2.address, '100000000000000000000')
          expect(await DeployedBondable.balanceOf(user2.address)).to.equal(
@@ -165,7 +177,7 @@ describe("Test mining Niit using Nahmii native coin", function () {
         await DeployedNiit.connect(user2).approve(DeployedStaking.address,'20000000000000000')
         
         // Stake bought tokens
-        await DeployedStaking.connect(user2).stake("20000000000000000", DeployedNiit.address)
+        await DeployedStaking.connect(user2).stake("20000000000000000")
          // Check user2 NIIt balance berfore withdrawing stake
         expect(await DeployedNiit.balanceOf(user2.address)).to.equal(
             "0"
@@ -174,7 +186,7 @@ describe("Test mining Niit using Nahmii native coin", function () {
         expect(await DeployedStaking.connect(user2).checkStakingBalance(user2.address)).to.be.greaterThan("5282899200000000000")
         
         //withdraw staked tokens 
-        await DeployedStaking.connect(user2).withdrawStake("5280000000000000000", DeployedNiit.address)
+        await DeployedStaking.connect(user2).withdrawStake("5280000000000000000")
          expect(await DeployedNiit.balanceOf(user2.address)).to.equal(
             "5280000000000000000"
             );
@@ -184,7 +196,7 @@ describe("Test mining Niit using Nahmii native coin", function () {
         expect(await DeployedBondDepo.fetchExistingUserBond(user2.address)).to.equal('0')
 
             // Try to withdraw funds from bond after withdrawing from stake
-        await expect (DeployedBondDepo.connect(user2).getTokens(DeployedNiit.address)).to.be.revertedWith("Er4: No funds to withdraw ")
+        await expect (DeployedBondDepo.connect(user2).getTokens()).to.be.revertedWith("Er4: No funds to withdraw ")
 
   });
 });
