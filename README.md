@@ -2,7 +2,7 @@
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
 
 ### Assumed Market Values
-Since we donnot have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
+Since we do not have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
 - 100 Nii = 1NIIT
 - 25 AssetToken = 1NIIT
