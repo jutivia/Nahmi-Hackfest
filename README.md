@@ -27,10 +27,10 @@
 - NIIT protocol DApp requires [Metamask](https://metamask.io/) browser wallet extension to interact with.
 - Connect metamask browser wallet to Nahmii 3 Testnet (NIIT).
 - Request and get test NII for the metamask account from [Nahmii 3 matic Faucet](https://faucet.n3g0.nahmii.net/) to make transactions.
-- Mint the AssetTokens from the AssetToken contract [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a).
-- Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
-- Stake and withdraw protocol tokens or mature bonds using the staking contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
-
+- Mint Protocol tokens directly using the Nahmii native coin NII from the protocol Token contract (NIIT)[0x1d7A2FB23cf3F889e203cfe276F3f7965BDB6Fdc](https://explorer.n3g0.nahmii.net/address/0x1d7A2FB23cf3F889e203cfe276F3f7965BDB6Fdc).
+- Mint the AssetTokens from the AssetToken contract [0x0193B15c06d69cA546AE69b70155c945d3D601b7](https://explorer.n3g0.nahmii.net/address/0x0193B15c06d69cA546AE69b70155c945d3D601b7).
+- Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0xA148D0c477EeC169Ee9f7F1Ac90B92C0AECF1821](https://explorer.n3g0.nahmii.net/address/0xA148D0c477EeC169Ee9f7F1Ac90B92C0AECF1821)
+- Stake and withdraw protocol tokens or mature bonds using the staking contract - [0x3202c2Cef49DF7987B04aB2aF24E83F758253cdB](https://explorer.n3g0.nahmii.net/address/0x3202c2Cef49DF7987B04aB2aF24E83F758253cdB)
 - Access NIIT protocol DApp at [NIIT-Protocol](https://dod-nft-marketplace.netlify.app/) and minting our NIIT protocol tokens!.
 #
 ### Run the DApp Locally
@@ -49,7 +49,7 @@ npx hardhat compile
 ```
 #### Deploy smart contract 
 ```
-npx hardhat run scripts/deploy.ts -- network namhmii
+npx hardhat run scripts/deploy.ts --network namhmii
 ```
 #### Test smart contract
 ```

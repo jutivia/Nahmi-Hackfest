@@ -1,22 +1,47 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+   const BondDepositoryContract = await ethers.getContractFactory("BondDepository");
+    let DeployedBondDepo = await BondDepositoryContract.deploy();
+    await DeployedBondDepo.deployed();
 
-  const lockedAmount = ethers.utils.parseEther("1");
+    // deploy NiiToken contracct
+    const VaultContract = await ethers.getContractFactory("Vault");
+    let DeployedVault = await VaultContract.deploy(DeployedBondDepo.address);
+    await DeployedVault.deployed();
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+    // deploy Bondable Asset contract
+    const AssetERC20Contract = await ethers.getContractFactory("AssetToken");
+    let DeployedBondable = await AssetERC20Contract.deploy(DeployedVault.address);
+    await DeployedBondable.deployed();
 
-  await lock.deployed();
+    //deploy Staking contract
+    const StakingContract = await ethers.getContractFactory("Staking");
+    let DeployedStaking = await StakingContract.deploy(DeployedBondDepo.address, DeployedVault.address);
+    await DeployedStaking.deployed();
 
-  console.log(`Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
+    // deploy NiiToken contracct
+    const NiitERC20Contract = await ethers.getContractFactory("NahmiiERC20Token");
+    let DeployedNiit = await NiitERC20Contract.deploy(DeployedVault.address, DeployedStaking.address, DeployedBondDepo.address);
+    await DeployedNiit.deployed();
+
+      //setting the bondable asset address
+        await DeployedBondDepo.setBondableAsset(DeployedBondable.address);
+
+        //Setting vault address
+        await DeployedBondDepo.setVaultAddress(DeployedVault.address)
+
+        // Setting staking contract addr 
+        await DeployedBondDepo.setStakingContractaddr(DeployedStaking.address);
+
+        // setting the NiiToken contract address 
+        await DeployedBondDepo.setNiitERC20Addr(DeployedNiit.address);
+        await DeployedStaking.setNiitERC20Addr(DeployedNiit.address);
+
+  // console.log(DeployedBondDepo.address,DeployedVault.address,DeployedBondable.address, DeployedStaking.address, DeployedNiit.address);
 }
+// vault= 0x3F7DBA89C0d6a6D97110D353Aea26E3978417587
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
