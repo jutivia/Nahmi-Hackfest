@@ -10,7 +10,7 @@ Since we do not have access to any decentralised oracle that supports the Nahmi 
 - Price with bonds  => 24 AssetToken = 1 NIIT (4% discount)
 
 ### Features
-- Mint test asset token for free to deposit for bonds.
+- Mint test AssetToken for free to deposit for bonds.
 - Mint Niitokens with the Nii at a market price ratio of 100Nii to 1 Niitoken.
 - Alternatively bond AssetToken minted above for 7 days to get the market value equivalence worth protocol tokens given at a 4% discount rate.
 - The tokens gotten from the bond can then be staked for a longer period of time, with 7 days being the minimum waiting period before the staked tokens can begin to rack up rewards from the stake. The reward is calclated per second of stake, at at reward rate of 50% ROI per year.
