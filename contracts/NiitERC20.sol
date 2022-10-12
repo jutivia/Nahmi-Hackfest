@@ -12,9 +12,9 @@ contract NahmiiERC20Token is ERC20 {
     using SafeMath for uint256;
 
     address stakingContractAddr;
-    address NiitERC20Addr;
+    address BondDepo;
     Staking stakingContract;
-    Vault VaultContract 
+    Vault VaultContract;
     // Since we don’t have access to any decentralised oracle that supports the Nahmii blockchain, we had to assume market value prices for the assets used in the project.
     // 100 Nii = 1Niit
     // 
@@ -22,42 +22,41 @@ contract NahmiiERC20Token is ERC20 {
     // 4 Nii = 1 BondableAsset
 
     // Bonded price => 24 BondableAsset = 1 Niit (4% discount)
-    uint256 marketRatioNiiTokenToNii = 100
-    constructor(address _vaultAddress, address _stakingaddr, address _NiitERC20Addr)
+    uint256 marketRatioNiiTokenToNii = 100;
+    constructor(address _vaultAddress, address _stakingaddr, address _BondDepo)
         ERC20("NahmiiToken", "Niit", 18)
     {
         VaultContract = Vault(_vaultAddress);
         stakingContract = Staking(_stakingaddr);
-        NiitERC20Addr = _NiitERC20Addr;
+        BondDepo = _BondDepo;
         stakingContractAddr = _stakingaddr;
     }
 
-    function mintForSale(address account_) external payable override {
-        require(msg.value > 0,"Er1: mint amount too low")
+    function mintForSale(address account_) external payable {
+        require(msg.value > marketRatioNiiTokenToNii, "Er1: mint amount too low");
         uint256 amountToMint = msg.value/marketRatioNiiTokenToNii;
         _mint(account_, amountToMint);
-        VaultContract.documentIncomingFunds.value(msg.value).(msg.value);
+        VaultContract.documentIncomingFunds{value:msg.value}(msg.value);
     }
 
-    function mintFromBond(address account_, uint256 amountToMint, uint256 index) external override {
-        require(msg.sender === NiitERC20Addr, 'Er2: Only Niit token contract')
+    function mintFromBond(address _userAddress, uint256 amountToMint, uint256 index) external {
+        require(msg.sender == BondDepo, 'Er2: Only Bond Depo contract');
         require (VaultContract.getIndexedAssetPerUser(_userAddress,index) >= amountToMint);
-        _mint(account_, amountToMint);
+        _mint(_userAddress, amountToMint);
     }
 
     function MintFromStake(address account_, uint256 amountToMint) external {
         //check stake amount is greater than amount to mint
-        require(msg.sender === stakingContractAddr, 'Er3: Only staking contract');
-        require(stakingContract.checkStakingBalance >=  amountToMint, 'Er4: Insufficient Balance');
+        require(msg.sender == stakingContractAddr, 'Er3: Only staking contract');
         _mint(account_, amountToMint);
     }
 
 
-    function burn(uint256 amount) external override {
+    function burn(uint256 amount) external  {
         _burn(msg.sender, amount);
     }
 
-    function burnFrom(address account_, uint256 amount_) external override {
+    function burnFrom(address account_, uint256 amount_) external {
         _burnFrom(account_, amount_);
     }
 
@@ -67,7 +66,13 @@ contract NahmiiERC20Token is ERC20 {
             "Er5: ERC20 => burn amount exceeds allowance"
         );
 
-        _approve(account_, msg.sender, decreasedAllowance_);
+        _approve(account_, msg.sender, decreasedAllowanc4_);
         _burn(account_, amount_);
+    }
+
+     function approve(address spender, uint256 amount) public virtual override returns (bool) {
+        address owner = msg.sender;
+        _approve(owner, spender, amount);
+        return true;
     }
 }

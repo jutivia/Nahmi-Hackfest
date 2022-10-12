@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0
-pragma solidity ^0.7.5;
+pragma solidity 0.8.17;
 
 // TODO(zx): Replace all instances of SafeMath with OZ implementation
 library SafeMath {

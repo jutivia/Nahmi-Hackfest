@@ -4,32 +4,32 @@ pragma solidity 0.8.17;
 import "./libraries/SafeMath.sol";
 
 import "./interfaces/IERC20.sol";
-import "./Vault.sol"
+import "./types/ERC20.sol";
+import "./Vault.sol";
 
 contract AssetToken is ERC20 {
     using SafeMath for uint256;
 
-    uint256 marketRatioBondableAssetToNii = 4
+    uint96 marketRatioBondableAssetToNii = 4;
     address ValutAddress;
+
     constructor(address _vaultAddress)
         ERC20("AssetToken", "ASST", 18)
     {
-        ValutAddress = _ValutAddress;
+        ValutAddress = _vaultAddress;
     }
 
     // 4 Nii = 1 BondableAsset
-    function mint(address account_, amount) external payable override {
-        require(msg.value > 0,"Er1: mint amount too low")
-        uint256 amountToMint = msg.value/marketRatioBondableAssetToNii;
-        _mint(account_, amountToMint);
-        Vault(ValutAddress).documentIncomingFunds.value(msg.value).(msg.value);
+    function mint(address account_, uint256 amount) external payable {
+        // uint256 amountToMint = msg.value/marketRatioBondableAssetToNii;
+        _mint(account_, amount);
     }
 
-    function burn(uint256 amount) external override {
+    function burn(uint256 amount) external {
         _burn(msg.sender, amount);
     }
 
-    function burnFrom(address account_, uint256 amount_) external override {
+    function burnFrom(address account_, uint256 amount_) external {
         _burnFrom(account_, amount_);
     }
 
@@ -41,5 +41,11 @@ contract AssetToken is ERC20 {
 
         _approve(account_, msg.sender, decreasedAllowance_);
         _burn(account_, amount_);
+    }
+
+    function approve(address spender, uint256 amount) public virtual override returns (bool) {
+        address owner = msg.sender;
+        _approve(owner, spender, amount);
+        return true;
     }
 }

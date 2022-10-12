@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0
 pragma solidity 0.8.17;
-import './BondDepository';
+import './BondDepository.sol';
 import "./NiitERC20.sol";
 contract Staking{
     mapping(address => Staker) stakerToStakes;
@@ -11,10 +11,10 @@ contract Staking{
     BondDepository BondContract;
 
      struct UserBonds{
-        uint256 id,
-        address UserAddress,
-        uint96 lastTimeDeposited,
-        uint256 tokenAmountToBeGotten,
+        uint256 id;
+        address UserAddress;
+        uint96 lastTimeDeposited;
+        uint256 tokenAmountToBeGotten;
     }
 
     struct Staker{
@@ -24,22 +24,22 @@ contract Staking{
     }
     // Staking is done at 50% interest per year, and accumulated for users per second.
 
-    constructor (address _BondDepositoryAddress, address _NiitAddress, address _vaultAddress){
+    constructor (address _BondDepositoryAddress, address _vaultAddress){
         BondContract = BondDepository(_BondDepositoryAddress);
-        VaultAddress = _VaultAddress;
+        VaultAddress = _vaultAddress;
     }
+
     function stakeFromMatureBonds() external{
-       require(BondContract.checkBondExisist(msg.sender), 'Er1: Bond does not exist');
+       require(BondContract.checkBondExist(msg.sender), 'Er1: Bond does not exist');
        (, bool matured) = BondContract.checkMaturity(msg.sender);
-       require(matured === true, 'Er2: Bond not mature');
-       UserBonds bond = BondContract.fetchExistingUserBond(msg.sender);
-       uint256 amountToStake = bond.tokenAmountToBeGotten;
+       require(matured == true, 'Er2: Bond not mature');
+       (uint256 amountToStake) = BondContract.fetchExistingUserBond(msg.sender);
         _stake(amountToStake);
         BondContract.deleteBondAfterStake(msg.sender);
-
     }
-    function stake(uint256 _amount, address NiitAddress){
-        require(NiitERC20(NiitAddress).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed')
+
+    function stake(uint256 _amount, address NiitAddress) external{
+        require(NahmiiERC20Token(NiitAddress).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed');
         _stake(_amount);
     }
 
@@ -54,7 +54,7 @@ contract Staking{
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
             uint bonus = (o.currentStake * 2/100000000 * stakePeriod);
-            o.currentStake += _amountIn + bonus;
+            o.currentStake = o.currentStake + _amountIn + bonus;
         } else {
             o.currentStake += _amountIn;
         }
@@ -63,7 +63,7 @@ contract Staking{
     }
 
      // this function re-compounds the staker's stakes if the lastStakedTime is greater than 3 days each time its being called 
-    function withdrawStake (uint _amount) external{
+    function withdrawStake (uint _amount,  address NiitAddress) external {
         Staker storage o = stakerToStakes[msg.sender];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
@@ -73,12 +73,12 @@ contract Staking{
         require (o.currentStake >= _amount, 'Er4: Stake balance less than request amount');
         o.currentStake -= _amount;
         o.lastTimeStake = uint96(block.timestamp);
-        MintFromStake()
+        NahmiiERC20Token(NiitAddress).MintFromStake(msg.sender, _amount);
     }
 
     // This function checks the compounded balance for each staker
-    function checkStakingBalance () external view returns (uint balance){
-        Staker storage o = stakerToStakes[msg.sender];
+    function checkStakingBalance (address _account) external view returns (uint balance){
+        Staker storage o = stakerToStakes[_account];
         uint stakePeriod = block.timestamp - o.lastTimeStake;
         if(stakePeriod >= minStakePeriod){
             uint bonus = (o.currentStake *  2/100000000 * stakePeriod);
