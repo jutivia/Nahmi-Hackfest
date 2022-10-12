@@ -4,7 +4,7 @@
 ### Assumed Market Values
 Since we donnot have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
-- 100 Nii = 1NIItoken
+- 100 Nii = 1NIIT
 - 25 AssetToken = 1NIIT
 - 4 NII = 1 AssetToken
 - Price with bonds  => 24 AssetToken = 1 NIIT (4% discount)
