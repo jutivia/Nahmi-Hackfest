@@ -1,7 +1,7 @@
 # Nahmi Hackfest submission
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
 
-### Assumed Market Values => 
+### Assumed Market Values
 Since we donnot have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
 - 100 Nii = 1Niitoken
