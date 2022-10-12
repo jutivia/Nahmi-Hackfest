@@ -1,4 +1,4 @@
-# Nahmi Hackfest submission
+# Nahmi Hackfest Submission
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
 
 ### Assumed Market Values
