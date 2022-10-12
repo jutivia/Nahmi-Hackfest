@@ -1,6 +1,7 @@
 # Nahmi Hackfest submission
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
 
+#
 ### Assumed Market Values
 Since we do not have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
@@ -8,7 +9,7 @@ Since we do not have access to any decentralised oracle that supports the Nahmi 
 - 25 AssetToken = 1NIIT
 - 4 NII = 1 AssetToken
 - Price with bonds  => 24 AssetToken = 1 NIIT (4% discount)
-
+#
 ### Features
 - Mint test AssetToken for free to deposit for bonds.
 - Mint Niitokens with the Nii at a market price ratio of 100Nii to 1 Niitoken.
