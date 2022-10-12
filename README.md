@@ -34,14 +34,14 @@
 - Access NIIT protocol DApp at [NIIT-Protocol](https://dod-nft-marketplace.netlify.app/) and minting our NIIT protocol tokens!.
 #
 ### Run the DApp Locally
-```
-#### Open new terminal window and clone this repository
+
+### Open new terminal window and clone this repository
 ```
 git clone https://github.com/jutivia/Nahmi-Hackfest
 ```
 #### Install dependencies
 ```
-npm install && cd client npm install
+npm install
 ```
 #### Compile smart contract
 ```
