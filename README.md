@@ -30,7 +30,7 @@ Since we do not have access to any decentralised oracle that supports the Nahmi 
 - Request and get test NII for the metamask account from [Nahmii 3 matic Faucet](https://faucet.n3g0.nahmii.net/) to make transactions.
 - Mint the AssetTokens from the AssetToken contract [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a).
 - Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
-- Stake and withdraw protocol tokens or mature bonds using the staking contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
+- Stake protocol tokens or mature bonds using the staking contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
 
 - Access NIIT protocol DApp at [NIIT-Protocol](https://dod-nft-marketplace.netlify.app/) and mint our NIIT protocol tokens!.
 #
