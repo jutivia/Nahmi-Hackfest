@@ -4,10 +4,10 @@
 ### Assumed Market Values
 Since we donnot have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
-- 100 Nii = 1Niitoken
-- 25 AssetToken = 1Niit
-- 4 Nii = 1 AssetToken
-- Price with bonds  => 24 AssetToken = 1 Niit (4% discount)
+- 100 Nii = 1NIItoken
+- 25 AssetToken = 1NIIT
+- 4 NII = 1 AssetToken
+- Price with bonds  => 24 AssetToken = 1 NIIT (4% discount)
 
 ### Features
 - Mint test asset token for free to deposit for bonds.
