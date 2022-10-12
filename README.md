@@ -1,15 +1,16 @@
 # Nahmi Hackfest submission
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
 
-### Assumed Market Values => Since we donnot have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
+### Assumed Market Values
+Since we do not have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
-- 100 Nii = 1Niitoken
-- 25 AssetToken = 1Niit
-- 4 Nii = 1 AssetToken
-- Price with bonds  => 24 AssetToken = 1 Niit (4% discount)
+- 100 Nii = 1NIIT
+- 25 AssetToken = 1NIIT
+- 4 NII = 1 AssetToken
+- Price with bonds  => 24 AssetToken = 1 NIIT (4% discount)
 
 ### Features
-- Mint test asset token for free to deposit for bonds.
+- Mint test AssetToken for free to deposit for bonds.
 - Mint Niitokens with the Nii at a market price ratio of 100Nii to 1 Niitoken.
 - Alternatively bond AssetToken minted above for 7 days to get the market value equivalence worth protocol tokens given at a 4% discount rate.
 - The tokens gotten from the bond can then be staked for a longer period of time, with 7 days being the minimum waiting period before the staked tokens can begin to rack up rewards from the stake. The reward is calclated per second of stake, at at reward rate of 50% ROI per year.
@@ -27,11 +28,19 @@
 - NIIT protocol DApp requires [Metamask](https://metamask.io/) browser wallet extension to interact with.
 - Connect metamask browser wallet to Nahmii 3 Testnet (NIIT).
 - Request and get test NII for the metamask account from [Nahmii 3 matic Faucet](https://faucet.n3g0.nahmii.net/) to make transactions.
+<<<<<<< HEAD
 - Mint Protocol tokens directly using the Nahmii native coin NII from the protocol Token contract (NIIT)[0x1d7A2FB23cf3F889e203cfe276F3f7965BDB6Fdc](https://explorer.n3g0.nahmii.net/address/0x1d7A2FB23cf3F889e203cfe276F3f7965BDB6Fdc).
 - Mint the AssetTokens from the AssetToken contract [0x0193B15c06d69cA546AE69b70155c945d3D601b7](https://explorer.n3g0.nahmii.net/address/0x0193B15c06d69cA546AE69b70155c945d3D601b7).
 - Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0xA148D0c477EeC169Ee9f7F1Ac90B92C0AECF1821](https://explorer.n3g0.nahmii.net/address/0xA148D0c477EeC169Ee9f7F1Ac90B92C0AECF1821)
 - Stake and withdraw protocol tokens or mature bonds using the staking contract - [0x3202c2Cef49DF7987B04aB2aF24E83F758253cdB](https://explorer.n3g0.nahmii.net/address/0x3202c2Cef49DF7987B04aB2aF24E83F758253cdB)
 - Access NIIT protocol DApp at [NIIT-Protocol](https://dod-nft-marketplace.netlify.app/) and minting our NIIT protocol tokens!.
+=======
+- Mint the AssetTokens from the AssetToken contract [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a).
+- Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
+- Stake protocol tokens or mature bonds using the staking contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
+
+- Access NIIT protocol DApp at [NIIT-Protocol](https://dod-nft-marketplace.netlify.app/) and mint our NIIT protocol tokens!.
+>>>>>>> 8c0df3d336bca82b883dd7f84eceb2e72a1c2ccb
 #
 ### Run the DApp Locally
 
