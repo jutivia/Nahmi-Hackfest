@@ -1,13 +1,75 @@
-# Sample Hardhat Project
+# Nahmi Hackfest submission
+<i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+### Assumed Market Values => Since we donnot have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
-Try running some of the following tasks:
+- 100 Nii = 1Niitoken
+- 25 AssetToken = 1Niit
+- 4 Nii = 1 AssetToken
+- Price with bonds  => 24 AssetToken = 1 Niit (4% discount)
 
-```shell
+### Features
+- Mint test asset token for free to deposit for bonds.
+- Mint Niitokens with the Nii at a market price ratio of 100Nii to 1 Niitoken.
+- Alternatively bond AssetToken minted above for 7 days to get the market value equivalence worth protocol tokens given at a 4% discount rate.
+- The tokens gotten from the bond can then be staked for a longer period of time, with 7 days being the minimum waiting period before the staked tokens can begin to rack up rewards from the stake. The reward is calclated per second of stake, at at reward rate of 50% ROI per year.
+- Alternatively, if you own the protocol tokens, and you want to make passive income with it, you can directly stake your tokens, using the same reward system explained above.
+- All funds made by the dapp is sent directly to a vault contract, which should be controlled by a DOA in the long run, but currently is cunrrently manged by a single owner.
+#
+### Stack
+- [Solidity](https://docs.soliditylang.org/en/v0.7.6/) - Object-oriented, high-level language for implementing smart contracts.
+- [Tailwind](https://getbootstrap.com/) - CSS framework for faster and easier web development.
+- [React.js](https://reactjs.org/) - JavaScript library for building user interfaces.
+- [Ethers.js](https://web3js.readthedocs.io/en/v1.3.4/) - Allows users to interact with a local or remote ethereum node using HTTP, IPC or WebSocket.
+- [Hardhat](https://hardhat.org/) - Development environment, testing framework and asset pipeline for blockchains using the Ethereum Virtual Machine (EVM).
+#
+### Interact with the deployed DApp
+- NIIT protocol DApp requires [Metamask](https://metamask.io/) browser wallet extension to interact with.
+- Connect metamask browser wallet to Nahmii 3 Testnet (NIIT).
+- Request and get test NII for the metamask account from [Nahmii 3 matic Faucet](https://faucet.n3g0.nahmii.net/) to make transactions.
+- Mint the AssetTokens from the AssetToken contract [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a).
+- Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
+- Stake and withdraw protocol tokens or mature bonds using the staking contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
+
+- Access NIIT protocol DApp at [DOD-NFT-marketplace](https://dod-nft-marketplace.netlify.app/) and minting our NIIT protocol tokens!.
+#
+### Run the DApp Locally
+```
+#### Open new terminal window and clone this repository
+```
+git clone https://github.com/jutivia/Nahmi-Hackfest
+```
+#### Install dependencies
+```
+npm install && cd client npm install
+```
+#### Compile smart contract
+```
+npx hardhat compile
+```
+#### Deploy smart contract 
+```
+npx hardhat run scripts/deploy.ts -- network namhmii
+```
+#### Test smart contract
+```
+npx hardhat test test/bondAndStake.ts.
+```
+#### Navigate to the frontend
+```
+cd frontend
+```
+#### Install dependencies
+```
+npm install
+```
+#### Start DApp
+```
+npm start
+```
+- Open metamask browser wallet and connect network.
+```
+#### Hardhat help commands
 npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
+
 ```
