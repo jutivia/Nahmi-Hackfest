@@ -20,7 +20,7 @@ contract Vault{
     }
 
     function documentIncomingAssets(uint256 amount, address _userAddress, uint256 index) external {
-        require(msg.sender == BondDepositoryAddress, "Er2: Not accessible");
+        require(msg.sender == BondDepositoryAddress, "Er1: Not accessible");
         uint existingAmountPerIndex = indexedAssetPerUser[_userAddress][index];
         uint256 existingAmountPerUser = assetsPerUser[_userAddress];
         indexedAssetPerUser[_userAddress][index] = existingAmountPerIndex + amount;
@@ -33,7 +33,22 @@ contract Vault{
     }
 
     function documentIncomingFunds(uint256 amount) payable external {
-        require(msg.value == amount, "Er1: Invalid amount");
+        require(msg.value == amount, "Er2: Invalid amount");
         NiiBalance += amount;
+    }
+
+    function withdrawNii(uint256 _amount, address _addr) external{
+        require(msg.sender == owner, "Er3 only owner");
+        require(NiiBalance >= _amount, "Er4: Insufficient funds");
+        NiiBalance -= _amount;
+        payable(_addr).transfer(_amount);
+    }
+
+    function WithdrawNiitoken (uint256 _amount, address _addr, address _NiitERC20Addr) external{
+        require(msg.sender == owner, "Er4 only owner");
+        require(AssetBalance >= _amount, "Er5: Insufficient funds");
+        AssetBalance -= _amount;
+        NahmiiERC20Token(_NiitERC20Addr).transferFrom(address(this), _addr, _amount);
+        
     }
 }
