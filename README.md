@@ -73,11 +73,11 @@ cd frontend
 ```
 #### Install dependencies
 ```
-npm install
+yarn
 ```
 #### Start DApp
 ```
-npm start
+yarn start
 ```
 - Open metamask browser wallet and connect network.
 ```
