@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    outline: none;
+    -ms-overflow-style: none !important; /* IE and Edge */
+    scrollbar-width: none !important; /* Firefox */
+}
+*::-webkit-scrollbar {
+    display: none !important;
+}
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    font-size: 16px;
+    max-width: 1440px;
+    font-family: "poppins", "sans seris";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+}
+
+body {
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeSpeed;
+    font-weight: normal;
+    width: min(100%, 1440px);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.1ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@layer components {
+    .overlay {
+        @apply fixed inset-0 z-[999];
+        background: rgba(0, 0, 0, 0.5);
+    }
+    @supports (backdrop-filter: blur(5px)) {
+        .overlay,
+        .page-content {
+            backdrop-filter: blur(5px);
+        }
+    }
+
+    .page-content {
+        background: rgba(0, 0, 0, 0.5);
+        height: min(90vh, 30rem);
+        width: max(65%, 40rem);
+        @apply flex-center-start flex-col rounded-3xl p-8;
+    }
+
+    .page-content h1 {
+        @apply text-cerulean font-bold text-3xl text-center my-2;
+    }
+
+    .nav-link:hover span,
+    .nav-link.active span {
+        transition: 300ms ease-in-out;
+        width: 100%;
+    }
+
+    .purple-gradient {
+        background: linear-gradient(99.04deg, #dc398c 5.39%, #00a3de 218.1%);
+    }
+
+    .flex-start-start {
+        @apply flex items-start justify-start;
+    }
+    .flex-start-center {
+        @apply flex items-start justify-center;
+    }
+    .flex-start-between {
+        @apply flex items-start justify-between;
+    }
+    .flex-center-start {
+        @apply flex items-center justify-start;
+    }
+    .flex-center-center {
+        @apply flex items-center justify-center;
+    }
+    .flex-center-between {
+        @apply flex items-center justify-between;
+    }
+    .flex-center-end {
+        @apply flex items-center justify-end;
+    }
+
+    .background {
+        background: linear-gradient(to bottom right, #02062b, #68299a);
+    }
+
+    .btn-filled {
+        @apply rounded-[10px] text-white;
+        background: linear-gradient(99.04deg, #dc398c 5.39%, #02062b 218.1%);
+        transition: background 300ms ease-in-out;
+    }
+
+    .btn-filled:hover {
+        background: linear-gradient(99.04deg, #902784 5.39%, #2c338a 218.1%);
+    }
+}
+
+.check {
+    border: 2px solid red;
+}

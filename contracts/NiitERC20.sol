@@ -61,12 +61,12 @@ contract NahmiiERC20Token is ERC20 {
     }
 
     function _burnFrom(address account_, uint256 amount_) internal {
-        uint256 decreasedAllowanc4_ = allowance(account_, msg.sender).sub(
+        uint256 decreasedAllowance_ = allowance(account_, msg.sender).sub(
             amount_,
             "Er5: ERC20 => burn amount exceeds allowance"
         );
 
-        _approve(account_, msg.sender, decreasedAllowanc4_);
+        _approve(account_, msg.sender, decreasedAllowance_);
         _burn(account_, amount_);
     }
 
