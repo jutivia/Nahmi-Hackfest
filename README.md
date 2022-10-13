@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Nahmi Hackfest submission (An interpretation of the Olympus Pro contract)
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early) </i>
 
@@ -73,11 +73,11 @@ cd frontend
 ```
 #### Install dependencies
 ```
-npm install
+yarn
 ```
 #### Start DApp
 ```
-npm start
+yarn start
 ```
 - Open metamask browser wallet and connect network.
 ```

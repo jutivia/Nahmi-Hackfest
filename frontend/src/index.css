@@ -21,7 +21,6 @@
 html,
 body {
     font-size: 16px;
-    max-width: 1440px;
     font-family: "poppins", "sans seris";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -34,6 +33,7 @@ body {
     text-rendering: optimizeSpeed;
     font-weight: normal;
     width: min(100%, 1440px);
+    max-width: 1440px;
 }
 
 input::-webkit-outer-spin-button,
