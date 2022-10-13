@@ -11,7 +11,7 @@ const Layout = (): JSX.Element => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="h-[90vh] background flex-center-center flex-col"
+                className="h-[90vh] w-full background flex-start-start flex-col"
             >
                 <Outlet />
             </motion.section>
