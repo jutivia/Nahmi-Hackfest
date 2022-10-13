@@ -10,6 +10,7 @@
         "@types/node": "^16.7.13",
         "@types/react": "^18.0.0",
         "@types/react-dom": "^18.0.0",
+        "connectkit": "^0.0.2",
         "eslint-config-prettier": "^8.5.0",
         "framer-motion": "^7.5.3",
         "react": "^18.2.0",
@@ -19,6 +20,7 @@
         "react-scripts": "5.0.1",
         "tailwind-scrollbar-hide": "^1.1.7",
         "typescript": "*",
+        "wagmi": "^0.7.1",
         "web-vitals": "^2.1.0"
     },
     "scripts": {

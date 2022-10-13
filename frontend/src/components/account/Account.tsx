@@ -1,3 +1,4 @@
+import { ConnectKitButton } from "connectkit";
 import React from "react";
 
 import { FaWallet } from "react-icons/fa";
@@ -7,7 +8,7 @@ function Account(): JSX.Element {
             {/* <span>0x00</span> */}
             <button className="flex-center-between gap-x-2">
                 <FaWallet className="inline" />
-                Connect Wallet
+                <ConnectKitButton/>
             </button>
         </button>
     );
