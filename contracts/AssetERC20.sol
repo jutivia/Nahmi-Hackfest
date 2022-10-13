@@ -5,16 +5,13 @@ import "./libraries/SafeMath.sol";
 
 import "./interfaces/IERC20.sol";
 import "./types/ERC20.sol";
-import "./Vault.sol";
 
 contract AssetToken is ERC20 {
     using SafeMath for uint256;
-    address ValutAddress;
 
-    constructor(address _vaultAddress)
+    constructor()
         ERC20("AssetToken", "ASST", 18)
     {
-        ValutAddress = _vaultAddress;
     }
 
     function mint(address account_, uint256 amount) external payable {

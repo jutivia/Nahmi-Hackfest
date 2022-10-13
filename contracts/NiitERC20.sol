@@ -2,11 +2,9 @@
 pragma solidity 0.8.17;
 
 import "./libraries/SafeMath.sol";
-
-import "./interfaces/IERC20.sol";
 import "./types/ERC20.sol";
-import "./Vault.sol";
-import './staking.sol';
+import "./interfaces/IVault.sol";
+import "./interfaces/Istaking.sol";
 
 contract NahmiiERC20Token is ERC20 {
     using SafeMath for uint256;
