@@ -12,7 +12,7 @@ async function main() {
 
     // deploy Bondable Asset contract
     const AssetERC20Contract = await ethers.getContractFactory("AssetToken");
-    let DeployedBondable = await AssetERC20Contract.deploy(DeployedVault.address);
+    let DeployedBondable = await AssetERC20Contract.deploy();
     await DeployedBondable.deployed();
 
     //deploy Staking contract

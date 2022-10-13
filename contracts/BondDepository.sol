@@ -2,11 +2,9 @@
 pragma solidity 0.8.17;
 
 
-import "./NiitERC20.sol";
-import "./types/ERC20.sol";
+import "./interfaces/INiitERC20.sol";
 import "./interfaces/IERC20.sol";
-import "./AssetERC20.sol";
-import "./Vault.sol";
+import "./interfaces/IVault.sol";
 contract BondDepository {
     struct UserBonds{
         uint256 id;
@@ -50,7 +48,7 @@ contract BondDepository {
     }
     function deposit(uint256 _amount, address _user) external {
        require(_amount > 2000, "Er2: Bond amount too low");
-       require(AssetToken(BondableAsset).transferFrom(_user, vaultAddress, _amount), 'Er3: Asset deposit failed');
+       require(IERC20(BondableAsset).transferFrom(_user, vaultAddress, _amount), 'Er3: Asset deposit failed');
        UserBonds storage bond  = addressToBond[_user];
        bond.id = id;
        bond.UserAddress = _user;
@@ -91,7 +89,7 @@ contract BondDepository {
         require(tokensToMint > 0, "Er4: No funds to withdraw ");
         uint256 timeSpent = block.timestamp - uint256(bond.lastTimeDeposited);
         require(timeSpent >= waitingTime, "Er5: Bond maturity period not yet reached");
-        NahmiiERC20Token(NiitERC20Addr).mintFromBond(msg.sender, tokensToMint, bond.id);
+        INahmiiERC20Token(NiitERC20Addr).mintFromBond(msg.sender, tokensToMint, bond.id);
         delete addressToBond[msg.sender];
     }
 

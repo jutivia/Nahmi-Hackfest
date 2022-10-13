@@ -1,14 +1,16 @@
-# Nahmi Hackfest submission
-<i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)</i>
+# Nahmi Hackfest submission (An interpretation of the Olympus Pro contract)
+<i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early) </i>
+
 
 #
-### Assumed Market Values
+### Constraints
 Since we do not have access to any decentralised oracle that supports the Nahmi blockchain, we had to assume market value prices for the assets used in the project.
 
 - 100 Nii = 1NIIT
 - 25 AssetToken = 1NIIT
 - 4 NII = 1 AssetToken
 - Price with bonds  => 24 AssetToken = 1 NIIT (4% discount)
+
 #
 ### Features
 - Mint test AssetToken for free to deposit for bonds.
@@ -17,6 +19,7 @@ Since we do not have access to any decentralised oracle that supports the Nahmi 
 - The tokens gotten from the bond can then be staked for a longer period of time, with 7 days being the minimum waiting period before the staked tokens can begin to rack up rewards from the stake. The reward is calclated per second of stake, at at reward rate of 50% ROI per year.
 - Alternatively, if you own the protocol tokens, and you want to make passive income with it, you can directly stake your tokens, using the same reward system explained above.
 - All funds made by the dapp is sent directly to a vault contract, which should be controlled by a DOA in the long run, but currently is cunrrently manged by a single owner.
+
 #
 ### Stack
 - [Solidity](https://docs.soliditylang.org/en/v0.7.6/) - Object-oriented, high-level language for implementing smart contracts.

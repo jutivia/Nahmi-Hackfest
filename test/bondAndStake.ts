@@ -25,7 +25,7 @@ describe("Test mining Niit using Nahmii native coin", function () {
 
     // deploy Bondable Asset contract
     const AssetERC20Contract = await ethers.getContractFactory("AssetToken");
-    DeployedBondable = await AssetERC20Contract.deploy(DeployedVault.address);
+    DeployedBondable = await AssetERC20Contract.deploy();
     await DeployedBondable.deployed();
 
     //deploy Staking contract

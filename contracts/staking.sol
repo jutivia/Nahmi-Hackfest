@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0
 pragma solidity 0.8.17;
-import './BondDepository.sol';
-import "./NiitERC20.sol";
+
+import './interfaces/IBondDepository.sol';
+import "./interfaces/INiitERC20.sol";
+import "./interfaces/IERC20.sol";
+
 contract Staking{
     mapping(address => Staker) stakerToStakes;
     address BondDepositoryAddress;
@@ -10,7 +13,7 @@ contract Staking{
     address owner;
     uint96 constant minStakePeriod = 7 days;
 
-    BondDepository BondContract;
+    IBondDepository BondContract;
 
     struct Staker{
         address owner;
@@ -20,7 +23,7 @@ contract Staking{
     // Staking is done at 50% interest per year, and accumulated for users per second.
 
     constructor (address _BondDepositoryAddress, address _vaultAddress){
-        BondContract = BondDepository(_BondDepositoryAddress);
+        BondContract = IBondDepository(_BondDepositoryAddress);
         VaultAddress = _vaultAddress;
         owner = msg.sender;
     }
@@ -42,7 +45,7 @@ contract Staking{
     }
 
     function stake(uint256 _amount) external{
-        require(NahmiiERC20Token(NiitERC20Addr).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed');
+        require(IERC20(NiitERC20Addr).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed');
         _stake(_amount);
     }
 
@@ -76,7 +79,7 @@ contract Staking{
         require (o.currentStake >= _amount, 'Er4: Stake balance less than request amount');
         o.currentStake -= _amount;
         o.lastTimeStake = uint96(block.timestamp);
-        NahmiiERC20Token(NiitERC20Addr).MintFromStake(msg.sender, _amount);
+        INahmiiERC20Token(NiitERC20Addr).MintFromStake(msg.sender, _amount);
     }
 
     // This function checks the compounded balance for each staker

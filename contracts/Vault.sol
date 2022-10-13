@@ -2,8 +2,7 @@
 pragma solidity 0.8.17;
 
 
-import "./NiitERC20.sol";
-
+import "./interfaces/IERC20.sol";
 
 contract Vault{
 
@@ -48,7 +47,7 @@ contract Vault{
         require(msg.sender == owner, "Er4 only owner");
         require(AssetBalance >= _amount, "Er5: Insufficient funds");
         AssetBalance -= _amount;
-        NahmiiERC20Token(_NiitERC20Addr).transferFrom(address(this), _addr, _amount);
+        IERC20(_NiitERC20Addr).transferFrom(address(this), _addr, _amount);
         
     }
 }
