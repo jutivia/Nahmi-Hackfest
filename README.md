@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Nahmi Hackfest submission (An interpretation of the Olympus Pro contract)
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early) </i>
 
