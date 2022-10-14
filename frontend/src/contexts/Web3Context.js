@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useCallback } from "react";
 import { ethers, utils, Contract } from "ethers";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {ASSET_TOKEN_CONTRACT, ASSET_TOKEN_ADDRESS } from '../utils/constants/constants'
+import {ASSET_TOKEN_CONTRACT, ASSET_TOKEN_ADDRESS, BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT } from '../utils/constants/constants'
 
 export const Web3Context = createContext(null);
 const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
@@ -10,6 +10,11 @@ const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
 function Web3ContextProvider({ children }) {
     const [account, setAccount] = useState(null);
     const [connected, setConnected] = useState(false);
+    const [bond, setBond] = useState(0);
+    const [maturity, setMaturity] = useState({
+        isMature: false,
+        timeLeft: 0
+    });
     const [accountBalance, setAccountBalance] = useState({
         tokenBalance: 0,
         coinBalance: 0,
@@ -55,10 +60,12 @@ function Web3ContextProvider({ children }) {
     };
 
     const getAssetTokenBalance = async (address) => {
-        if (connected) {
+        if (!connected) {
             try {
-                const contract = getContractWithProvider(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
+                const contract = getContractWithSigner(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
+                console.log(contract)
                 const balance = await contract.balanceOf(address);
+                console.log('asset', balance)
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
@@ -69,11 +76,9 @@ function Web3ContextProvider({ children }) {
     };
 
     const getCoinBalance = async (address) => {
-        console.log('connected4', connected)
         if (!connected) {
             try {
                 const balance = await provider.getBalance(address);
-                console.log('balance', balance)
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
@@ -156,13 +161,14 @@ function Web3ContextProvider({ children }) {
         connectWallet();
         const accounts = await provider.listAccounts();
         if (!accounts.length) return;
-        const assetTokenBalance = await getAssetTokenBalance(accounts[0]);
         const coinBalance = await getCoinBalance(accounts[0]);
+        const assetTokenBalance = await getAssetTokenBalance(accounts[0]);
         setAccountBalance({
             assetTokenBalance,
             coinBalance,
         });
         setAccount(accounts[0]);
+        checkExistingBond(accounts[0])
         setConnected(true);
     };
 
@@ -176,6 +182,53 @@ function Web3ContextProvider({ children }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    const bondAST = async(amount) => {
+        try {
+                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
+                const assetContract = getContractWithSigner(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
+                await assetContract.approve(BOND_DEPO_ADDRESS, utils.parseEther(amount.toString()))
+                const res = await contract.deposit(utils.parseEther(amount.toString()), account);
+                await res.wait()
+                toast.success('Bond created successfully')
+                const coinBalance = await getCoinBalance(account);
+                const assetTokenBalance = await getAssetTokenBalance(account);
+                setAccountBalance({
+                    assetTokenBalance,
+                    coinBalance,
+                });
+
+            } catch (error) {
+                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
+                console.error(error.message);
+            }
+    }
+    const checkExistingBond =async (addr) =>{
+         try {
+                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
+                const res = await contract.fetchExistingUserBond(addr);
+                let str = res.toString()
+                str = Number(ethers.utils.formatEther(str))
+                console.log('str', str)
+                setBond(str)
+            } catch (error) {
+                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
+                console.error(error.message);
+            }
+    }
+     const checkBondMaturity =async () =>{
+         try {
+                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
+                const res = await contract.checkMaturity(account);
+                console.log(res)
+                setMaturity({
+                    isMature:res.matured,
+                    timeLeft: res.waitingTimeLeft
+                })
+            } catch (error) {
+                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
+                console.error(error.message);
+            }
+    }
     const value = {
         account,
         connected,
@@ -183,6 +236,10 @@ function Web3ContextProvider({ children }) {
         disconnectWallet,
         accountBalance,
         claimFreeTokens,
+        bondAST,
+        bond,
+        checkBondMaturity,
+        maturity
     };
     return (
         <Web3Context.Provider

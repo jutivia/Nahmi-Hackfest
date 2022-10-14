@@ -6,9 +6,7 @@ function Balance() {
      const {  accountBalance } = useContext(Web3Context);
      const [balance, setBalance] = useState(0)
      const formatBalance = ()=> {
-        console.log(accountBalance)
         const amount = Number(accountBalance.coinBalance)
-        console.log(amount)
         setBalance(amount.toFixed(2))
      }
      useEffect(()=>{
