@@ -43,7 +43,7 @@ Since we do not have access to any decentralised oracle that supports the Nahmi 
 - Bond AssetTokens to mint protocol tokens using the BondDeopsitory contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
 - Stake protocol tokens or mature bonds using the staking contract - [0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a](https://mumbai.polygonscan.com/address/0x4D737c9F72fC9AbA9140Cecb65cd5DD7F43eDA8a)
 
-- Access NIIT protocol DApp at [NIIT-Protocol](https://dod-nft-marketplace.netlify.app/) and mint our NIIT protocol tokens!.
+- Access NIIT protocol DApp at [NIIT-Protocol](https://niit-protocol.netlify.app/) and mint our NIIT protocol tokens!.
 
 #
 ### Run the DApp Locally
