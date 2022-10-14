@@ -54,7 +54,7 @@ function Web3ContextProvider({ children }) {
         return new Contract(contractAddress, contractABI, signer);
     };
 
-    const getTokenBalance = async (address) => {
+    const getAssetTokenBalance = async (address) => {
         if (connected) {
             try {
                 const contract = getContractWithProvider(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
@@ -69,9 +69,11 @@ function Web3ContextProvider({ children }) {
     };
 
     const getCoinBalance = async (address) => {
-        if (connected) {
+        console.log('connected4', connected)
+        if (!connected) {
             try {
                 const balance = await provider.getBalance(address);
+                console.log('balance', balance)
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
@@ -154,15 +156,16 @@ function Web3ContextProvider({ children }) {
         connectWallet();
         const accounts = await provider.listAccounts();
         if (!accounts.length) return;
-        const tokenBalance = await getTokenBalance(accounts[0]);
+        const assetTokenBalance = await getAssetTokenBalance(accounts[0]);
         const coinBalance = await getCoinBalance(accounts[0]);
         setAccountBalance({
-            tokenBalance,
+            assetTokenBalance,
             coinBalance,
         });
         setAccount(accounts[0]);
         setConnected(true);
     };
+
     useEffect(() => {
         init();
         if (!window.ethereum) return;

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import nahmiiLogo from "../../assets/png/nahmii-logo-dark.png";
 import { Account, Balance, Faucet } from "../../components";
+import { Web3Context } from "../../contexts/Web3Context";
 
 const menuLinks = [
     { name: "Dashboard", path: "/" },
@@ -10,6 +11,7 @@ const menuLinks = [
     { name: "Trade", path: "/trade" },
 ];
 const Navbar = () => {
+    const {  connected } = useContext(Web3Context);
     const location = useLocation();
     const [activeLink, setActiveLink] = useState(location.pathname);
 
@@ -49,8 +51,8 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="flex-center-between gap-x-4">
-                 <Faucet /> 
-                <Balance />
+                {connected &&  <Faucet /> }
+                { connected && <Balance />}
                 <Account />
             </div>
         </nav>
