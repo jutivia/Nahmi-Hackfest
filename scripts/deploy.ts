@@ -38,7 +38,8 @@ async function main() {
         await DeployedBondDepo.setNiitERC20Addr(DeployedNiit.address);
         await DeployedStaking.setNiitERC20Addr(DeployedNiit.address);
 
-  // console.log(DeployedBondDepo.address,DeployedVault.address,DeployedBondable.address, DeployedStaking.address, DeployedNiit.address);
+  console.log(DeployedBondDepo.address,DeployedVault.address,DeployedBondable.address, DeployedStaking.address, DeployedNiit.address);
+  // 0x5b2B088dD9c5be1476F400227Ef3f2Fa99748ea4 0x21C6bDEdc49dd548B3b1a2A8c5F320A86061071D 0xEB3F3be965074c0e0b639C55E121F5C6815BFdEC 0x2F70499b22fCAf53b91A81Edc1A385679b0cD1df 0x4F9242A4035d9256d2206f01CfB35d5b9b34F275
 }
 // vault= 0x3F7DBA89C0d6a6D97110D353Aea26E3978417587
 

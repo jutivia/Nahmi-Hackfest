@@ -14,7 +14,7 @@ contract AssetToken is ERC20 {
     {
     }
 
-    function mint(address account_, uint256 amount) external payable {
+    function mint(address account_, uint256 amount) external {
         _mint(account_, amount);
     }
 
