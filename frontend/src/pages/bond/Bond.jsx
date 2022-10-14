@@ -35,10 +35,10 @@ function Bond() {
     const [bondToken, setBond] = useState(0)
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
-    const {  accountBalance, connected, bondAST, bond, checkBondMaturity, maturity, timeLeft } = useContext(Web3Context);
+    const {  accountBalance, connected, bondAST, bond, checkBondMaturity, maturity, timeLeft, stakeBond, withdrawBondTokens } = useContext(Web3Context);
     const [balance, setBalance] = useState(0)
-    const [showText, setShowText] = useState(false)
-    const [mature, setMature] = useState(false)
+    const [showText, setShowText] = useState(true)
+    const [mature, setMature] = useState(true)
     const [countdown, setCountdown] = useState(0)
     // console.log(bond)
     const formatBalance = ()=> {
@@ -116,7 +116,7 @@ function Bond() {
                     {!mature && <h4 className="text-cerulean font-bold text-2xl my-2"> Your tokens are still brewing! They would be available for use in {countdown} seconds</h4>}
                     {mature && <div>
                         <h4 className="text-cerulean font-bold text-2xl my-2"> Tokens are mature, and ready for use!</h4>
-                        <div className="flex-center-center gap-x-10"><button className="btn-no-fill bg-white"> Stake Tokens</button> <button className="btn-no-fill bg-cerulean text-white">Withdraw Tokens </button></div>
+                        <div className="flex-center-center gap-x-10"><button className="btn-no-fill bg-white" onClick={stakeBond}> Stake Tokens</button> <button className="btn-no-fill bg-cerulean text-white" onClick={withdrawBondTokens}>Withdraw Tokens </button></div>
                         </div>}
                 </div>}
             </section>

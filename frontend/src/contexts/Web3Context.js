@@ -2,7 +2,7 @@ import React, { useState, useEffect, createContext, useCallback } from "react";
 import { ethers, utils, Contract } from "ethers";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {ASSET_TOKEN_CONTRACT, ASSET_TOKEN_ADDRESS, BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT } from '../utils/constants/constants'
+import {ASSET_TOKEN_CONTRACT, ASSET_TOKEN_ADDRESS, BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT, STAKING_CONTRACT, STAKING_ADDRESS } from '../utils/constants/constants'
 
 export const Web3Context = createContext(null);
 const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
@@ -225,6 +225,35 @@ function Web3ContextProvider({ children }) {
                 console.error(error.message);
             }
     }
+     const stakeBond =async () =>{
+         try {
+                const contract = getContractWithSigner(STAKING_ADDRESS, STAKING_CONTRACT);
+                const res = await contract.stakeFromMatureBonds(account);
+                awiat res.wait()
+                toast.success('Tokens staked successfully')
+            } catch (error) {
+                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
+                console.error(error.message);
+            }
+    }
+
+    const withdrawBondTokens =async () =>{
+         try {
+                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
+                const res = await contract.getTokens();
+                awiat res.wait()
+                toast.success('Transaction successfull')
+                const coinBalance = await getCoinBalance(account);
+                const assetTokenBalance = await getAssetTokenBalance(account);
+                setAccountBalance({
+                    assetTokenBalance,
+                    coinBalance,
+                });
+            } catch (error) {
+                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
+                console.error(error.message);
+            }
+    }
     const value = {
         account,
         connected,
@@ -236,7 +265,9 @@ function Web3ContextProvider({ children }) {
         bond,
         checkBondMaturity,
         maturity,
-        timeLeft
+        timeLeft,
+        stakeBond,
+        withdrawBondTokens
     };
     return (
         <Web3Context.Provider
