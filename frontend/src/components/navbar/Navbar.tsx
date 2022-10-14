@@ -50,7 +50,7 @@ const Navbar = (): JSX.Element => {
             <div className="flex-center-between gap-x-4">
                 <Faucet />
                 <Balance />
-                <Account />
+                <Account/>
             </div>
         </nav>
     );
