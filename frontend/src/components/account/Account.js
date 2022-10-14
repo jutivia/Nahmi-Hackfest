@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { AppContext } from '../../context/AppContext';
+import { AppContext } from 'contexts/AppContext';
 import { FaWallet } from "react-icons/fa";
 import {shortenAddress} from '../../utils/shortenAddress';
 import React, {

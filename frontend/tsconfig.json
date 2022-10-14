@@ -11,7 +11,8 @@
             "@Pages/*": ["./src/pages/*"],
             "@Hooks/*": ["./src/hooks/*"],
             "@Utils/*": ["./src/utils/*"],
-            "@Constants/*": ["./src/constants/*"]
+            "@Constants/*": ["./src/constants/*"],
+            "@Contexts/*": ["./src/contexts/*"]
         },
         "allowJs": true,
         "skipLibCheck": true,

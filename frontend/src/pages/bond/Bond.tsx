@@ -40,7 +40,7 @@ function Bond(): JSX.Element {
         return () => clearInterval(next);
     }, [current]);
     return (
-        <main className="flex-center-between px-[10%] h-full w-full gap-x-8">
+        <main className="flex-center-between px-[5%] h-full w-full gap-x-8">
             <section>
                 <Header
                     header="Bond"

@@ -8,6 +8,7 @@ const { ethereum } = window;
 
 export const AppContextProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState("");
+  const provider = new ethers.providers.Web3Provider(ethereum);
   
   
  
@@ -18,7 +19,6 @@ export const AppContextProvider = ({ children }) => {
     
     try {
       if (!ethereum) return alert("Please install MetaMask.");
-     // const provider = new ethers.providers.Web3Provider(ethereum);
       const accounts = await ethereum.request({ method: "eth_accounts" });
 
       if (accounts.length) {
@@ -63,11 +63,13 @@ export const AppContextProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnect();
-  }, []);
+  }, [])
+  
     return (
         <AppContext.Provider value={{ currentAccount,
             connectWallet,
-            disconnectWallet
+            disconnectWallet,
+            provider
            }}>{ children }</AppContext.Provider>
     );
 };
