@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-// import { FaMoon, FaSun } from "react-icons/fa";
 import nahmiiLogo from "assets/png/nahmii-logo-dark.png";
 import { Account, Balance, Faucet } from "components";
+
 const menuLinks = [
     { name: "Dashboard", path: "/" },
     { name: "Bond", path: "/bond" },
@@ -11,6 +11,7 @@ const menuLinks = [
 ];
 const Navbar = (): JSX.Element => {
     const [activeLink, setActiveLink] = useState<string>(location.pathname);
+
     const handleSelectedLink = (selected: string): void => {
         setActiveLink(selected);
     };
@@ -51,10 +52,6 @@ const Navbar = (): JSX.Element => {
                 <Balance />
                 <Account/>
             </div>
-            {/* <button>
-                <FaSun className="h-8" />
-                <FaMoon className="w-8" />
-            </button> */}
         </nav>
     );
 };

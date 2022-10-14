@@ -21,9 +21,14 @@
         "react-scripts": "5.0.1",
         "tailwind-scrollbar-hide": "^1.1.7",
         "typescript": "*",
+<<<<<<< HEAD
         "wagmi": "^0.7.1",
         "web-vitals": "^2.1.0",
         "web3modal": "^1.9.9"
+=======
+        "wagmi": "^0.7.0",
+        "web-vitals": "^2.1.0"
+>>>>>>> ce65af1c674286f04802c28008726642688b508f
     },
     "scripts": {
         "start": "react-scripts start",
