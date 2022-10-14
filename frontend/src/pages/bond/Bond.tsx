@@ -51,14 +51,14 @@ function Bond(): JSX.Element {
         return () => clearInterval(next);
     }, [current]);
     return (
-        <main className="flex-center-between px-[5%] h-full w-full gap-x-8">
+        <main className="flex-center-between px-[5%] h-full w-full gap-x-20">
             <section>
                 <Header
                     header="Bond"
                     description=" Bond your assets and earn Nahmii DAO tokens at a discount."
                 />
 
-                <div className=" flex-start-start mt-8 max-w-[42rem] h-28 glass p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">
+                <div className=" flex-start-start mt-8 max-w-[40rem] h-28 glass p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">
                     <div className="flex-center-start gap-x-4 mb-2">
                         <span className="text-cerulean font-bold">{`${sn + 1}/${
                             guides.length
@@ -67,7 +67,7 @@ function Bond(): JSX.Element {
                     </div>
                     <p>{message}</p>
                 </div>
-                <div className="flex-center-center max-w-[42rem] gap-x-8 glass bg-richBlack rounded-br-2xl rounded-bl-2xl p-8">
+                <div className="flex-center-center max-w-[40rem] gap-x-8 glass bg-richBlack rounded-br-2xl rounded-bl-2xl p-8">
                     {guides.map((guide) => (
                         <span
                             key={guide.sn}
@@ -82,14 +82,14 @@ function Bond(): JSX.Element {
                 </div>
             </section>
 
-            <section className="page-content flex-center-between flex-col py-12 w-full text-white">
+            <section className="page-content flex-center-between flex-col py-12 w-5/12 text-white">
                 <h2 className="font-bold text-left w-full text-2xl mb-4">
                     Bond Asset
                 </h2>
                 <div className="w-full grid gap-y-4">
                     <div className="flex-center-between ">
                         <h3>You give</h3>
-                        <div className="flex-center-between gap-x-8">
+                        <div className="flex-center-between gap-x-8 ">
                             <p>Balance: {0.0}</p>
                             <button className="btn-no-fill" onClick={()=>{setAmount(1000); convertToNiit(1000)}}>Max</button>
                         </div>
@@ -101,7 +101,8 @@ function Bond(): JSX.Element {
                             name="amount-in"
                             value={amount}
                             onChange={handleInput}
-                            className="input-field py-2"
+                            className="input-field py-8"
+                            max="1000"
                         />
                         <span className="bg-white flex-center-start gap-x-2 w-8 rounded-2xl ml-4 absolute hover:opacity-50">
                             <img
@@ -125,7 +126,7 @@ function Bond(): JSX.Element {
                             name="amount-out"
                             // onChange={handleInput}
                             value={NiiTAmount}
-                            className="input-field py-2"
+                            className="input-field py-8"
                             readOnly
                         />
                         <span className="bg-richBlack flex-center-start gap-x-2 w-8 rounded-2xl ml-4 absolute hover:opacity-50">
