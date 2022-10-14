@@ -49,7 +49,7 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="flex-center-between gap-x-4">
-                <Faucet />
+                 <Faucet /> 
                 <Balance />
                 <Account />
             </div>

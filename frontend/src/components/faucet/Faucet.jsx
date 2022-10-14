@@ -1,9 +1,14 @@
-import React, {useContext} from "react";
+import React, {useContext, useState} from "react";
 import {Web3Context} from '../../contexts/Web3Context'
 
 function Faucet() {
     const {claimFreeTokens} = useContext(Web3Context);
-    return <button className="btn-filled px-4 py-2" onClick={claimFreeTokens}>Mint Asset Tokens</button>;
+    const [showSpan, setShowSpan] = useState(false)
+    return (<div className="relative">
+    <button className="btn-filled px-4 py-2" onClick={claimFreeTokens} onMouseOver={()=>setShowSpan(true)} onMouseLeave={()=>setShowSpan(false)}>Get Asset Tokens</button>
+    {showSpan && <span className="absolute top-[120%] left-[-20%] text-center glass px-4 py-2 w-[15rem] "> Mint 1000 AST tokens for bonding</span>}
+    </div>);
+
 }
 
 export default Faucet;
