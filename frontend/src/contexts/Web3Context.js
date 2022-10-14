@@ -11,10 +11,8 @@ function Web3ContextProvider({ children }) {
     const [account, setAccount] = useState(null);
     const [connected, setConnected] = useState(false);
     const [bond, setBond] = useState(0);
-    const [maturity, setMaturity] = useState({
-        isMature: false,
-        timeLeft: 0
-    });
+    const [maturity, setMaturity] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(0);
     const [accountBalance, setAccountBalance] = useState({
         tokenBalance: 0,
         coinBalance: 0,
@@ -220,10 +218,8 @@ function Web3ContextProvider({ children }) {
                 const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
                 const res = await contract.checkMaturity(account);
                 console.log(res)
-                setMaturity({
-                    isMature:res.matured,
-                    timeLeft: res.waitingTimeLeft
-                })
+                setMaturity(res.matured,)
+                setTimeLeft(res.waitingTimeLeft)
             } catch (error) {
                  toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
                 console.error(error.message);
@@ -239,7 +235,8 @@ function Web3ContextProvider({ children }) {
         bondAST,
         bond,
         checkBondMaturity,
-        maturity
+        maturity,
+        timeLeft
     };
     return (
         <Web3Context.Provider

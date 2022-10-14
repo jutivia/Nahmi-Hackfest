@@ -35,7 +35,7 @@ function Bond() {
     const [bondToken, setBond] = useState(0)
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
-    const {  accountBalance, connected, bondAST, bond, checkBondMaturity, maturity } = useContext(Web3Context);
+    const {  accountBalance, connected, bondAST, bond, checkBondMaturity, maturity, timeLeft } = useContext(Web3Context);
     const [balance, setBalance] = useState(0)
     const [showText, setShowText] = useState(false)
     const [mature, setMature] = useState(false)
