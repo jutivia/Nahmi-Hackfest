@@ -1,6 +1,6 @@
 import React from "react";
 
-function Trade(): JSX.Element {
+function Trade(){
     return <div className="grid place-items-center">Trade</div>;
 }
 

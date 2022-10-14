@@ -2,7 +2,7 @@
 pragma solidity 0.8.17;
 
 
-contract INahmiiERC20Token  {
+interface INahmiiERC20Token  {
  
     function mintForSale(address account_) external payable ;
 
@@ -14,7 +14,6 @@ contract INahmiiERC20Token  {
 
     function burnFrom(address account_, uint256 amount_) external ;
 
-    function _burnFrom(address account_, uint256 amount_) internal ;
 
-     function approve(address spender, uint256 amount) public virtual override returns (bool) ;
+     function approve(address spender, uint256 amount) external virtual returns (bool) ;
 }

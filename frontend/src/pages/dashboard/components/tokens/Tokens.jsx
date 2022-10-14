@@ -1,17 +1,15 @@
 import React from "react";
-import { TokenType } from "utils/types";
-import symbol from "assets/png/nahmii-logo.png";
-
-const tokens: TokenType[] = [
+import symbol from "../../../../assets/png/nahmii-logo.png";
+const tokens = [
     {
         symbol: "NII",
         image: symbol,
         balance: 4.5,
     },
 ];
-function Tokens(): JSX.Element {
+function Tokens() {
     return (
-        <section className="page-content min-w-[50%] max-w-[40rem] text-white">
+        <section className="page-content min-w-[50%] max-w-[30rem] text-white">
             <h1>Tokens</h1>
             {tokens.length === 0 ? (
                 <p>
@@ -27,6 +25,7 @@ function Tokens(): JSX.Element {
                         >
                             <img
                                 src={token.image}
+                                alt={symbol}
                                 className="w-4 aspect-square"
                             />
                             <p>{token.balance}</p>

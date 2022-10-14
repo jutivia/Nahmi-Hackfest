@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "components";
-import tokenLogo from "assets/png/nahmii-logo.png";
+import { Header } from "../../components";
+import tokenLogo from "../../assets/png/nahmii-logo.png";
 const guides = [
     {
         sn: 0,
@@ -26,10 +26,10 @@ const guides = [
             "A successful transaction will result in an exchange of your assets for the protocol token at a 4% discount.",
     },
 ];
-function Bond(): JSX.Element {
-    const [current, setCurrent] = useState<number>(0);
-    const [amount, setAmount] = useState<number>(0)
-    const [NiiTAmount, setNiiTAmount] = useState<number>(0)
+function Bond() {
+    const [current, setCurrent] = useState(0);
+    const [amount, setAmount] = useState(0)
+    const [NiiTAmount, setNiiTAmount] = useState(0)
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
 
@@ -38,13 +38,13 @@ function Bond(): JSX.Element {
         convertToNiit(e.target.value);
 
     }
-    const convertToNiit = (num:number):void =>{
-        const init:number = num/20
+    const convertToNiit = (num)=>{
+        const init= num/20
         setNiiTAmount(init + (init * 0.04))
     }
     useEffect(() => {
-        const nextSlide = (): void =>
-            setCurrent((current: number) => (current + 1) % guides.length);
+        const nextSlide = () =>
+            setCurrent((current) => (current + 1) % guides.length);
         const next = setInterval(() => {
             nextSlide();
         }, 5000);

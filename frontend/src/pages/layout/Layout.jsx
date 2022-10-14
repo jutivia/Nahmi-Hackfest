@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Navbar } from "components";
-const Layout = (): JSX.Element => {
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Navbar } from "../../components";
+import Web3Context from "../../contexts/Web3Context";
+
+const Layout = () => {
+    const value = useContext(Web3Context);
+    console.log("layout value: ", value);
     return (
         <main>
             <Navbar />
@@ -14,6 +20,7 @@ const Layout = (): JSX.Element => {
                 className="h-[90vh] w-full background flex-start-start flex-col"
             >
                 <Outlet />
+                <ToastContainer />
             </motion.section>
         </main>
     );

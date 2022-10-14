@@ -1,7 +1,7 @@
-import { Header } from "components";
 import React from "react";
+import { Header } from "../../components";
 
-function Stake(): JSX.Element {
+function Stake() {
     return (
         <Header
             header="Stake"

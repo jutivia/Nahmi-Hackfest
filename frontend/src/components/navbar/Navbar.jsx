@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import nahmiiLogo from "assets/png/nahmii-logo-dark.png";
-import { Account, Balance, Faucet } from "components";
+import { Link, useLocation } from "react-router-dom";
+import nahmiiLogo from "../../assets/png/nahmii-logo-dark.png";
+import { Account, Balance, Faucet } from "../../components";
 
 const menuLinks = [
     { name: "Dashboard", path: "/" },
@@ -9,10 +9,11 @@ const menuLinks = [
     { name: "Stake", path: "/stake" },
     { name: "Trade", path: "/trade" },
 ];
-const Navbar = (): JSX.Element => {
-    const [activeLink, setActiveLink] = useState<string>(location.pathname);
+const Navbar = () => {
+    const location = useLocation();
+    const [activeLink, setActiveLink] = useState(location.pathname);
 
-    const handleSelectedLink = (selected: string): void => {
+    const handleSelectedLink = (selected) => {
         setActiveLink(selected);
     };
     return (
@@ -50,7 +51,7 @@ const Navbar = (): JSX.Element => {
             <div className="flex-center-between gap-x-4">
                 <Faucet />
                 <Balance />
-                <Account/>
+                <Account />
             </div>
         </nav>
     );

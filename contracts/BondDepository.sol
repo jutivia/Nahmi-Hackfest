@@ -57,7 +57,7 @@ contract BondDepository {
        uint256 tokens_To_Be_Gotten_At_Direct_Bond_Market_Value = ((_amount )/market_Ratio_Niitoken_To_Bondable_Asset);
        uint256 token_With_Bond_Discount = tokens_To_Be_Gotten_At_Direct_Bond_Market_Value + (tokens_To_Be_Gotten_At_Direct_Bond_Market_Value * bondDiscount / 100);
        bond.token_Amount_To_Be_Gotten = existing_Token_Bonded + token_With_Bond_Discount;
-       Vault(vaultAddress).documentIncomingAssets(bond.token_Amount_To_Be_Gotten, _user, id);
+       IVault(vaultAddress).documentIncomingAssets(bond.token_Amount_To_Be_Gotten, _user, id);
        id++;
     }
 

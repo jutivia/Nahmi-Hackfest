@@ -3,12 +3,12 @@ pragma solidity 0.8.17;
 
 interface IBondDepository {
 
-    function setBondableAsset(address _BondableAsset) external onlyOwner;
+    function setBondableAsset(address _BondableAsset) external;
 
-    function setVaultAddress (address _vaultAddress) external onlyOwner ;
-    function setNiitERC20Addr (address _NiitERC20Addr) external onlyOwner;
+    function setVaultAddress (address _vaultAddress) external  ;
+    function setNiitERC20Addr (address _NiitERC20Addr) external;
 
-    function setStakingContractaddr (address _stakingContractAddr) external onlyOwner;
+    function setStakingContractaddr (address _stakingContractAddr) external ;
     function deposit(uint256 _amount, address _user) external ;
 
     function fetchExistingUserBond (address _userAddress) external view returns (uint256 amount) ;

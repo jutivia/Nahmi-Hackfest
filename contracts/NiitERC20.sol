@@ -12,8 +12,8 @@ contract NahmiiERC20Token is ERC20 {
     uint96 marketRatioNiiTokenToNii = 100;
     address stakingContractAddr;
     address BondDepo;
-    Staking stakingContract;
-    Vault VaultContract;
+    IStaking stakingContract;
+    IVault VaultContract;
     // Since we don’t have access to any decentralised oracle that supports the Nahmii blockchain, we had to assume market value prices for the assets used in the project.
     // 100 Nii = 1Niit
     // 
@@ -24,8 +24,8 @@ contract NahmiiERC20Token is ERC20 {
     constructor(address _vaultAddress, address _stakingaddr, address _BondDepo)
         ERC20("NahmiiToken", "Niit", 18)
     {
-        VaultContract = Vault(_vaultAddress);
-        stakingContract = Staking(_stakingaddr);
+        VaultContract = IVault(_vaultAddress);
+        stakingContract = IStaking(_stakingaddr);
         BondDepo = _BondDepo;
         stakingContractAddr = _stakingaddr;
     }

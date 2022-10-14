@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { Dashboard, Bond, Stake, Trade, Error, Layout } from "pages";
+import { Dashboard, Bond, Stake, Trade, Error, Layout } from "./pages";
 import "./App.css";
 
-function App(): JSX.Element {
+function App() {
     return (
         <AnimatePresence mode="wait">
             <Router>
