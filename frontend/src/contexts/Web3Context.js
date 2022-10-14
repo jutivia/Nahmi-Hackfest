@@ -2,8 +2,7 @@ import React, { useState, useEffect, createContext, useCallback } from "react";
 import { ethers, utils, Contract } from "ethers";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import contractABI from "../utils/abi/DOW_ABI.json";
-const contractAddress = "0xe0D3C042D557dfc16670e43B2bBc6752216a539e";
+import {} from '../constants/constants'
 
 export const Web3Context = createContext(null);
 const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
@@ -106,7 +105,7 @@ function Web3ContextProvider({ children }) {
                     contractABI,
                     signer
                 );
-                await contract.claimFreeTokens();
+                await contract.mint(account, utils.parseEther('1000'));
             } catch (error) {
                 toast.error(error.message, toastConfig);
                 console.error(error);

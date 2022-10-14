@@ -1,34 +1,8 @@
 [
     {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "VRFaddress",
-          "type": "address"
-        }
-      ],
+      "inputs": [],
       "stateMutability": "nonpayable",
       "type": "constructor"
-    },
-    {
-      "inputs": [],
-      "name": "AlreadyClaimedFreeTokens",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "InsufficientTokens",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "NotOwner",
-      "type": "error"
-    },
-    {
-      "inputs": [],
-      "name": "PlayerHasNotPlayed",
-      "type": "error"
     },
     {
       "anonymous": false,
@@ -59,19 +33,6 @@
       "anonymous": false,
       "inputs": [
         {
-          "indexed": false,
-          "internalType": "uint256[]",
-          "name": "compNum",
-          "type": "uint256[]"
-        }
-      ],
-      "name": "PlayerNumbers",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
           "indexed": true,
           "internalType": "address",
           "name": "from",
@@ -92,75 +53,6 @@
       ],
       "name": "Transfer",
       "type": "event"
-    },
-    {
-      "inputs": [],
-      "name": "LeaderBoard",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "address",
-              "name": "playerAddress",
-              "type": "address"
-            },
-            {
-              "internalType": "uint96",
-              "name": "wins",
-              "type": "uint96"
-            }
-          ],
-          "internalType": "struct DOW.PlayerScore[]",
-          "name": "leaderBoard",
-          "type": "tuple[]"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "PlayerStruct",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "gamesPlayed",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint256",
-          "name": "unclaimedTokens",
-          "type": "uint256"
-        },
-        {
-          "internalType": "uint64",
-          "name": "gamesLost",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "currentWinStreak",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "maxWinStreak",
-          "type": "uint64"
-        },
-        {
-          "internalType": "uint64",
-          "name": "gamesWon",
-          "type": "uint64"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
     },
     {
       "inputs": [
@@ -230,79 +122,14 @@
       "type": "function"
     },
     {
-      "inputs": [],
-      "name": "checkClaimed",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "claimed",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "checkStreak",
-      "outputs": [
-        {
-          "components": [
-            {
-              "internalType": "uint256",
-              "name": "gamesPlayed",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint256",
-              "name": "unclaimedTokens",
-              "type": "uint256"
-            },
-            {
-              "internalType": "uint64",
-              "name": "gamesLost",
-              "type": "uint64"
-            },
-            {
-              "internalType": "uint64",
-              "name": "currentWinStreak",
-              "type": "uint64"
-            },
-            {
-              "internalType": "uint64",
-              "name": "maxWinStreak",
-              "type": "uint64"
-            },
-            {
-              "internalType": "uint64",
-              "name": "gamesWon",
-              "type": "uint64"
-            }
-          ],
-          "internalType": "struct DOW.Player",
-          "name": "",
-          "type": "tuple"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
       "inputs": [
         {
-          "internalType": "uint8",
-          "name": "trial",
-          "type": "uint8"
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
         }
       ],
-      "name": "checkTrials",
-      "outputs": [],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "claimFreeTokens",
+      "name": "burn",
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
@@ -310,20 +137,19 @@
     {
       "inputs": [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "name": "compNum",
-      "outputs": [
+          "internalType": "address",
+          "name": "account_",
+          "type": "address"
+        },
         {
           "internalType": "uint256",
-          "name": "",
+          "name": "amount_",
           "type": "uint256"
         }
       ],
-      "stateMutability": "view",
+      "name": "burnFrom",
+      "outputs": [],
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -388,6 +214,24 @@
       "type": "function"
     },
     {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "account_",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "mint",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "name": "name",
       "outputs": [
@@ -398,32 +242,6 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "randNum",
-      "outputs": [
-        {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
-    },
-    {
-      "inputs": [],
-      "name": "startGame",
-      "outputs": [
-        {
-          "internalType": "uint256[]",
-          "name": "playerNumbers",
-          "type": "uint256[]"
-        }
-      ],
-      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -456,7 +274,7 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "to",
+          "name": "recipient",
           "type": "address"
         },
         {
@@ -480,12 +298,12 @@
       "inputs": [
         {
           "internalType": "address",
-          "name": "from",
+          "name": "sender",
           "type": "address"
         },
         {
           "internalType": "address",
-          "name": "to",
+          "name": "recipient",
           "type": "address"
         },
         {
@@ -502,24 +320,6 @@
           "type": "bool"
         }
       ],
-      "stateMutability": "nonpayable",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "uint256",
-          "name": "_amount",
-          "type": "uint256"
-        },
-        {
-          "internalType": "address",
-          "name": "_addr",
-          "type": "address"
-        }
-      ],
-      "name": "transferToCreator",
-      "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
     }
