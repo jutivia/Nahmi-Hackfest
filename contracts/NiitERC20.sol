@@ -39,7 +39,7 @@ contract NahmiiERC20Token is ERC20 {
 
     function mintFromBond(address _userAddress, uint256 amountToMint, uint256 index) external {
         require(msg.sender == BondDepo, 'Er2: Only Bond Depo contract');
-        require (VaultContract.getIndexedAssetPerUser(_userAddress,index) >= amountToMint);
+        // require (VaultContract.getIndexedAssetPerUser(_userAddress,index) >= amountToMint);
         _mint(_userAddress, amountToMint);
     }
 
