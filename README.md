@@ -1,5 +1,6 @@
 
-# Nahmi Hackfest submission (An interpretation of the Olympus Pro contract)
+# NIIT Protocol
+### Nahmi Hackfest submission (An interpretation of the Olympus Pro contract)
 <i>A Protocol Owned Liqidity DAapp Deployed on the Nahmii 3 Testnet (Early)
 The NIIt protocol was built on the Olympus pro protocol model. The protocol encourages users to hold the protocol tokens (NIIT) as opposed to selling, because there’s a lot more profit to be gained from holding the tokens. These profits can be gained in two distinct ways: bonding of assets, or staking. The goal of the protocol is to ensure a rise in the market value of the protocol tokens, by ever increasing the demand for it. </i>
 
