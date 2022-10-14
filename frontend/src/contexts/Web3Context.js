@@ -217,9 +217,9 @@ function Web3ContextProvider({ children }) {
          try {
                 const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
                 const res = await contract.checkMaturity(account);
-                console.log(res)
+                console.log(Number(res.waitingTimeLeft))
                 setMaturity(res.matured,)
-                setTimeLeft(res.waitingTimeLeft)
+                setTimeLeft(Number(res.waitingTimeLeft))
             } catch (error) {
                  toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
                 console.error(error.message);

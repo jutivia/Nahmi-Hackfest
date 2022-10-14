@@ -54,10 +54,12 @@ function Bond() {
         }, [bond])
 
         
-        useEffect(()=>{
-             setMature(maturity.isMature)
-            setCountdown(maturity.timeLeft)
-        }, [maturity])
+        const checkMaturity = ()=>{
+            checkBondMaturity()
+             setShowText(true)
+             setMature(maturity)
+            setCountdown(timeLeft)
+        }
 
     const handleInput =(e:any):void=>{
         setAmount(e.target.value);
@@ -108,7 +110,7 @@ function Bond() {
                 </div>
                 <div className="flex-center-between gap-x-5 my-5">
                     <h3 className="text-2xl text-white">Tokens Bounded: {bondToken} NIIT</h3>
-                    {!mature && <button className="btn-no-fill" onClick={()=>{checkBondMaturity();  setShowText(true)}}>Check maturity</button>}
+                    {!mature && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
                 </div>
                {showText && <div>
                     {!mature && <h4 className="text-cerulean font-bold text-2xl my-2"> Your tokens are still brewing! They would be available for use in {countdown} seconds</h4>}
