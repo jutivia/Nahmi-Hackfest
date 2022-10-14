@@ -12,6 +12,7 @@
         "@types/react-dom": "^18.0.0",
         "connectkit": "^0.0.2",
         "eslint-config-prettier": "^8.5.0",
+        "ethers": "^5.7.1",
         "framer-motion": "^7.5.3",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -21,7 +22,8 @@
         "tailwind-scrollbar-hide": "^1.1.7",
         "typescript": "*",
         "wagmi": "^0.7.1",
-        "web-vitals": "^2.1.0"
+        "web-vitals": "^2.1.0",
+        "web3modal": "^1.9.9"
     },
     "scripts": {
         "start": "react-scripts start",

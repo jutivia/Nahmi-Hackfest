@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { WagmiConfig, createClient , chain} from "wagmi";
 import { ConnectKitProvider, getDefaultClient } from "connectkit";
+import { AppContextProvider } from "context/AppContext";
 
 const alchemyId = process.env.ALCHEMY_ID;
 
@@ -25,7 +26,9 @@ root.render(
     <React.StrictMode>
        <WagmiConfig client={client}>
             <ConnectKitProvider theme='auto' mode='dark'>
+                <AppContextProvider>
         <App />
+        </AppContextProvider>
         </ConnectKitProvider>
         </WagmiConfig>
     </React.StrictMode>
