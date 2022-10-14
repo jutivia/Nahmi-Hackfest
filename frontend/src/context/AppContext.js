@@ -54,7 +54,11 @@ export const AppContextProvider = ({ children }) => {
       throw new Error("No ethereum object");
     }
   };
-
+  const disconnectWallet = async () => {
+    setCurrentAccount("");
+    sessionStorage.clear();
+    window.location.reload();
+  }
   
 
   useEffect(() => {
@@ -63,7 +67,7 @@ export const AppContextProvider = ({ children }) => {
     return (
         <AppContext.Provider value={{ currentAccount,
             connectWallet,
-            
+            disconnectWallet
            }}>{ children }</AppContext.Provider>
     );
 };

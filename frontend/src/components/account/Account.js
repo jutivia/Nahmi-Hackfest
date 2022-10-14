@@ -11,12 +11,23 @@ function Account() {
 
     return (
         <button className="flex-center-center border border-cerulean text-cerulean gap-x-2 px-2 py-2 rounded-[10px]">
-            {!currentAccount
-              ?   <button type="button" className="btn btn-primary"
-              onClick={connectWallet}>Connect Wallet</button>
-              : (
-                <span></span>
-              )}
+           {!currentAccount ? (
+            <button
+              onClick={connectWallet}
+             
+
+               
+            >
+              Connect Wallet
+            </button>
+          ) : (
+            <button
+              onClick={disconnectWallet}
+            
+            >
+              Disconnect Wallet
+            </button>
+          )}
         </button>
         
     );
