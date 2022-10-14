@@ -20,6 +20,7 @@ function Web3ContextProvider({ children }) {
 
     // Requests wallet connection
     const connectWallet = async () => {
+        if(connected) return
         if (window.ethereum || window.web3) {
             try {
                 const accounts = await window.ethereum.request({
