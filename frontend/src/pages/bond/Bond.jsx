@@ -144,10 +144,10 @@ let time = {
                 </div>
                 <div className="flex-center-between gap-x-5 my-5">
                     <h3 className="text-2xl text-white">Tokens Bounded: {bondToken} NIIT</h3>
-                    {(!mature && bondToken) && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
+                    {(!showText && bondToken) && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
                 </div>
                {showText && <div>
-                    {!mature && <h4 className="text-cerulean font-bold text-2xl my-2"> Your tokens are still brewing! They would be available for use in {time.days} days, {time.hours} hours, {time.munites} minutes and {time.seconds} seconds</h4>}
+                    {!mature && <><h4 className="text-cerulean text-2xl my-2 max-w-2xl font-bold"> Your tokens are still brewing!</h4><h4 className="text-white text-2xl my-2 max-w-2xl"> They would be available for use in <span className="font-bold">{time.days} days, {time.hours} hours, {time.munites} minutes and {time.seconds} seconds</span></h4></>}
                     {mature && <div>
                         <h4 className="text-cerulean font-bold text-2xl my-2"> Tokens are mature, and ready for use!</h4>
                         <div className="flex-center-center gap-x-10"><button className="btn-no-fill bg-white" onClick={stakeBond}> Stake Tokens</button> <button className="btn-no-fill bg-cerulean text-white" onClick={withdrawBondTokens}>Withdraw Tokens </button></div>
