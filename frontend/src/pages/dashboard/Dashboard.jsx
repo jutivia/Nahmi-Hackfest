@@ -5,8 +5,14 @@ import { Web3Context } from "../../contexts/Web3Context";
 import symbol from "../../assets/png/nahmii-logo.png";
 import GetStarted from "./components/get-started/GetStarted";
 function Dashboard() {
-    const { connected, account, accountBalance, disconnectWallet, bond } =
-        useContext(Web3Context);
+    const {
+        connected,
+        account,
+        accountBalance,
+        disconnectWallet,
+        bond,
+        staked,
+    } = useContext(Web3Context);
     const connectedAccount = shortenAddress(account);
     const tokens = [
         {
@@ -17,7 +23,7 @@ function Dashboard() {
         {
             symbol: "AST",
             image: symbol,
-            balance: Number(accountBalance.assetTokenBalance) || 0,
+            balance: Number(accountBalance.assetTokenBalance).toFixed(2) || 0,
         },
     ];
 
@@ -54,7 +60,7 @@ function Dashboard() {
                                 Bonded Assets
                             </h3>
                             <p>
-                                <span>{bond.toFixed(2) || 0.0} </span>
+                                <span>{bond.toFixed(2) || 0} </span>
                                 NIIT
                             </p>
                         </li>
@@ -63,10 +69,7 @@ function Dashboard() {
                                 Staked Assets
                             </h3>
                             <p>
-                                <span>
-                                    {Number(accountBalance.stakedBalance) ||
-                                        0.0}{" "}
-                                </span>
+                                <span>{staked.toFixed(2) || 0} </span>
                                 NIIT
                             </p>
                         </li>

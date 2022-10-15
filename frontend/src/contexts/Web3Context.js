@@ -9,6 +9,8 @@ import {
     BOND_DEPO_CONTRACT,
     STAKING_CONTRACT,
     STAKING_ADDRESS,
+    NIIT_ADDRESS,
+    NIIT_CONTRACT,
 } from "../utils/constants/constants";
 
 export const Web3Context = createContext(null);
@@ -18,11 +20,13 @@ function Web3ContextProvider({ children }) {
     const [account, setAccount] = useState(null);
     const [connected, setConnected] = useState(false);
     const [bond, setBond] = useState(0);
+    const [staked, setStakedBalance] = useState(0);
     const [maturity, setMaturity] = useState(false);
     const [timeLeft, setTimeLeft] = useState(0);
     const [accountBalance, setAccountBalance] = useState({
         tokenBalance: 0,
         coinBalance: 0,
+        NiitBalance: 0,
     });
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -50,7 +54,7 @@ function Web3ContextProvider({ children }) {
             }
         } else {
             toast.error(
-                "Please Use a Web3 Enable Browser or Install Metamask",
+                "Please Use a Web3 Enabled Browser or Install Metamask",
                 toastConfig
             );
         }
@@ -60,7 +64,12 @@ function Web3ContextProvider({ children }) {
         setConnected(false);
         setAccount(null);
     };
-
+    const refreshState = () => {
+        const reload = setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+        return clearTimeout(reload);
+    };
     // const getContractWithProvider = (contractAddress, contractABI) => {
     //     return new Contract(contractAddress, contractABI, provider);
     // };
@@ -75,7 +84,30 @@ function Web3ContextProvider({ children }) {
                     ASSET_TOKEN_ADDRESS,
                     ASSET_TOKEN_CONTRACT
                 );
+                console.log(contract);
                 const balance = await contract.balanceOf(address);
+                console.log("asset", balance);
+                const formattedBalance = utils.formatUnits(balance, 18);
+                return formattedBalance;
+            } catch (error) {
+                toast.error(
+                    error ? error.message.slice(0, 50) : "Connection failed",
+                    toastConfig
+                );
+                console.error(error);
+            }
+        }
+    };
+    const getNIITBalance = async (address) => {
+        if (!connected) {
+            try {
+                const contract = getContractWithSigner(
+                    NIIT_ADDRESS,
+                    NIIT_CONTRACT
+                );
+                console.log(contract);
+                const balance = await contract.balanceOf(address);
+                console.log("niit", balance);
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
@@ -129,7 +161,13 @@ function Web3ContextProvider({ children }) {
                     ASSET_TOKEN_ADDRESS,
                     ASSET_TOKEN_CONTRACT
                 );
-                await contract.mint(account, utils.parseEther("1000"));
+                const res = await contract.mint(
+                    account,
+                    utils.parseEther("1000")
+                );
+                await res.wait();
+                toast.success("Minted 1000 AST", toastConfig);
+                refreshState();
             } catch (error) {
                 toast.error(
                     error ? error.message.slice(0, 50) : "Connection failed",
@@ -155,6 +193,7 @@ function Web3ContextProvider({ children }) {
                 } else {
                     const accounts = await provider.listAccounts();
                     setAccount(accounts[0]);
+                    refreshState();
                 }
             } catch (error) {
                 toast.error(
@@ -178,7 +217,7 @@ function Web3ContextProvider({ children }) {
             );
         } else {
             setConnected(true);
-            window.location.reload();
+            refreshState();
         }
     };
 
@@ -188,12 +227,15 @@ function Web3ContextProvider({ children }) {
         if (!accounts.length) return;
         const coinBalance = await getCoinBalance(accounts[0]);
         const assetTokenBalance = await getAssetTokenBalance(accounts[0]);
+        const NiitBalance = await getNIITBalance(accounts[0]);
         setAccountBalance({
             assetTokenBalance,
             coinBalance,
+            NiitBalance,
         });
         setAccount(accounts[0]);
         checkExistingBond(accounts[0]);
+        checkStakingBalance(accounts[0]);
         setConnected(true);
     };
 
@@ -231,14 +273,13 @@ function Web3ContextProvider({ children }) {
             toast.success("Bond created successfully", toastConfig);
             const coinBalance = await getCoinBalance(account);
             const assetTokenBalance = await getAssetTokenBalance(account);
+            const NiitBalance = await getNIITBalance(account);
             setAccountBalance({
                 assetTokenBalance,
                 coinBalance,
+                NiitBalance,
             });
-            const reload = setTimeout(() => {
-                window.location.reload();
-            }, 3500);
-            return () => clearTimeout(reload);
+            refreshState();
         } catch (error) {
             toast.error(
                 error ? error.message.slice(0, 73) : "Connection failed",
@@ -272,7 +313,6 @@ function Web3ContextProvider({ children }) {
                 BOND_DEPO_CONTRACT
             );
             const res = await contract.checkMaturity(account);
-            console.log(Number(res.waitingTimeLeft));
             setMaturity(res.matured);
             setTimeLeft(Number(res.waitingTimeLeft));
         } catch (error) {
@@ -292,6 +332,7 @@ function Web3ContextProvider({ children }) {
             const res = await contract.stakeFromMatureBonds(account);
             await res.wait();
             toast.success("Tokens staked successfully", toastConfig);
+            refreshState();
         } catch (error) {
             toast.error(
                 error ? error.message.slice(0, 73) : "Connection failed",
@@ -300,7 +341,32 @@ function Web3ContextProvider({ children }) {
             console.error(error.message);
         }
     };
-
+    const stakeTokens = async (amount) => {
+        try {
+            const contract = getContractWithSigner(
+                STAKING_ADDRESS,
+                STAKING_CONTRACT
+            );
+            const niitContract = getContractWithSigner(
+                NIIT_ADDRESS,
+                NIIT_CONTRACT
+            );
+            await niitContract.approve(
+                STAKING_ADDRESS,
+                utils.parseEther(amount)
+            );
+            const res = await contract.stake(ethers.utils.parseEther(amount));
+            await res.wait();
+            toast.success("Tokens staked successfully", toastConfig);
+            refreshState();
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
     const withdrawBondTokens = async () => {
         try {
             const contract = getContractWithSigner(
@@ -312,10 +378,59 @@ function Web3ContextProvider({ children }) {
             toast.success("Transaction successfull", toastConfig);
             const coinBalance = await getCoinBalance(account);
             const assetTokenBalance = await getAssetTokenBalance(account);
+            const NiitBalance = await getNIITBalance(account);
             setAccountBalance({
                 assetTokenBalance,
                 coinBalance,
+                NiitBalance,
             });
+            refreshState();
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
+    const withdrawStakedTokens = async (amount) => {
+        try {
+            const contract = getContractWithSigner(
+                STAKING_ADDRESS,
+                STAKING_CONTRACT
+            );
+            const res = await contract.withdrawStake(
+                ethers.utils.parseEther(amount)
+            );
+            await res.wait();
+            toast.success("Transaction successfull", toastConfig);
+            const coinBalance = await getCoinBalance(account);
+            const assetTokenBalance = await getAssetTokenBalance(account);
+            const NiitBalance = await getNIITBalance(account);
+            setAccountBalance({
+                assetTokenBalance,
+                coinBalance,
+                NiitBalance,
+            });
+            refreshState();
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
+    const checkStakingBalance = async (addr) => {
+        try {
+            const contract = getContractWithSigner(
+                STAKING_ADDRESS,
+                STAKING_CONTRACT
+            );
+            const res = await contract.checkStakingBalance(addr);
+            let str = res.toString();
+            str = Number(ethers.utils.formatEther(str));
+            setStakedBalance(str);
         } catch (error) {
             toast.error(
                 error ? error.message.slice(0, 73) : "Connection failed",
@@ -338,6 +453,9 @@ function Web3ContextProvider({ children }) {
         timeLeft,
         stakeBond,
         withdrawBondTokens,
+        staked,
+        stakeTokens,
+        withdrawStakedTokens,
     };
     return (
         <Web3Context.Provider value={value}>{children}</Web3Context.Provider>

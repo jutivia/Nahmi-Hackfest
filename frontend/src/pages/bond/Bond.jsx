@@ -137,6 +137,13 @@ function Bond() {
         }
     };
 
+    const setMax = () => {
+        if (connected) {
+            setAmount(balance);
+            convertToNiit(balance);
+        }
+    };
+
     return (
         <main className="flex-center-evenly px-[5%] h-full w-full ">
             <section>
@@ -167,78 +174,82 @@ function Bond() {
                         ></span>
                     ))}
                 </div>
-                <div className="flex-center-between gap-x-5 my-5">
-                    <h3 className="text-2xl font-bold text-white">
-                        Bonded Assets: {bondToken} NIIT
-                    </h3>
-                    {!showText && bondToken > 0 && (
-                        <button className="btn-no-fill" onClick={checkMaturity}>
-                            Check maturity
-                        </button>
-                    )}
-                </div>
-                {showText && (
-                    <div>
-                        {!mature && (
-                            <>
-                                <h4 className="text-cerulean text-2xl my-2 max-w-2xl font-bold">
-                                    {" "}
-                                    Your tokens are still brewing!
-                                </h4>
-                                <p className="text-white text-1xl my-2 max-w-2xl">
-                                    {" "}
-                                    Tokens will be available for use in{" "}
-                                    <span className="font-bold">
-                                        {time.days} days, {time.hours} hours,{" "}
-                                        {time.minutes} minutes and{" "}
-                                        {time.seconds} seconds
-                                    </span>
-                                </p>
-                            </>
-                        )}
-                        {mature && (
+                {connected && (
+                    <section>
+                        <div className="flex-center-between gap-x-5 my-5">
+                            <h3 className="text-2xl font-bold text-white">
+                                Bonded Assets: {bondToken} NIIT
+                            </h3>
+                            {!showText && bondToken > 0 && (
+                                <button
+                                    className="btn-no-fill"
+                                    onClick={checkMaturity}
+                                >
+                                    Check maturity
+                                </button>
+                            )}
+                        </div>
+                        {showText && (
                             <div>
-                                <h4 className="text-cerulean font-bold text-2xl my-2">
-                                    {" "}
-                                    Tokens are mature, and ready for use!
-                                </h4>
-                                <div className="flex-center-center gap-x-10">
-                                    <button
-                                        className="btn-no-fill bg-white"
-                                        onClick={stakeBond}
-                                    >
-                                        {" "}
-                                        Stake Tokens
-                                    </button>{" "}
-                                    <button
-                                        className="btn-no-fill bg-cerulean text-white"
-                                        onClick={withdrawBondTokens}
-                                    >
-                                        Withdraw Tokens{" "}
-                                    </button>
-                                </div>
+                                {!mature && (
+                                    <>
+                                        <h4 className="text-cerulean text-2xl my-2 max-w-2xl font-bold">
+                                            {" "}
+                                            Your tokens are still brewing!
+                                        </h4>
+                                        <p className="text-white text-1xl my-2 max-w-2xl">
+                                            {" "}
+                                            Tokens will be available for use in{" "}
+                                            <span className="font-bold">
+                                                {time.days} days, {time.hours}{" "}
+                                                hours, {time.minutes} minutes
+                                                and {time.seconds} seconds
+                                            </span>
+                                        </p>
+                                    </>
+                                )}
+                                {mature && (
+                                    <div>
+                                        <h4 className="text-cerulean font-bold text-2xl my-2">
+                                            {" "}
+                                            Tokens are mature, and ready for
+                                            use!
+                                        </h4>
+                                        <div className="flex-center-center gap-x-10">
+                                            <button
+                                                className="btn-no-fill bg-white"
+                                                onClick={stakeBond}
+                                            >
+                                                {" "}
+                                                Stake Tokens
+                                            </button>{" "}
+                                            <button
+                                                className="btn-no-fill bg-cerulean text-white"
+                                                onClick={withdrawBondTokens}
+                                            >
+                                                Withdraw Tokens{" "}
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
-                    </div>
+                    </section>
                 )}
             </section>
 
             <section className="page-content flex-center-between flex-col py-12 w-5/12 text-white">
-                <h2 className="font-bold text-left w-full text-2xl mb-4">
+                <h2 className="font-bold text-left w-full text-cerulean text-xl mb-4">
                     Bond Asset
                 </h2>
                 <div className="w-full grid gap-y-4">
                     <div className="flex-center-between ">
                         <h3>You give</h3>
                         <div className="flex-center-between gap-x-8 ">
-                            <p>Balance: {balance || 0} AST</p>
-                            <button
-                                className="btn-no-fill"
-                                onClick={() => {
-                                    setAmount(balance);
-                                    convertToNiit(balance);
-                                }}
-                            >
+                            <p>
+                                Balance: {connected ? balance || 0 : "0.00"} AST
+                            </p>
+                            <button className="btn-no-fill" onClick={setMax}>
                                 Max
                             </button>
                         </div>
@@ -251,7 +262,6 @@ function Bond() {
                             value={amount}
                             onChange={handleInput}
                             className="input-field py-8"
-                            max="1000"
                         />
                         <span className="bg-white flex-center-start gap-x-2 w-8 rounded-2xl ml-4 absolute hover:opacity-50">
                             <img
