@@ -8,7 +8,7 @@ const guides = [
         sn: 0,
         header: "Pick asset to bond",
         message:
-            "Select an asset to bond and swap for the Nahmii protocol token.",
+            "Mint the test asset tokens from the protocol's AST faucet.",
     },
     {
         sn: 1,
@@ -25,7 +25,7 @@ const guides = [
         sn: 3,
         header: "Receive tokens & accrue interest",
         message:
-            "A successful transaction will result in an exchange of your assets for the protocol token at a 4% discount.",
+            "A successful transaction will result in an exchange of your assets for the protocol token at a 4% discount after a 7 days maturity period.",
     },
 ];
 function Bond() {
