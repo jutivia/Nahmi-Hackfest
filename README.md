@@ -63,7 +63,7 @@ npx hardhat compile
 ```
 #### Deploy smart contract 
 ```
-npx hardhat run scripts/deploy.ts --network namhmii
+npx hardhat run scripts/deploy.ts --network nahmii
 ```
 #### Test smart contract
 ```
