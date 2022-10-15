@@ -1,8 +1,11 @@
-import React, { useState, useEffect, createContext, useCallback } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { ethers, utils, Contract } from "ethers";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {ASSET_TOKEN_CONTRACT, ASSET_TOKEN_ADDRESS } from '../utils/constants/constants'
+import {
+    ASSET_TOKEN_CONTRACT,
+    ASSET_TOKEN_ADDRESS,
+} from "../utils/constants/constants";
 
 export const Web3Context = createContext(null);
 const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
@@ -20,7 +23,7 @@ function Web3ContextProvider({ children }) {
 
     // Requests wallet connection
     const connectWallet = async () => {
-        if(connected) return
+        if (connected) return;
         if (window.ethereum || window.web3) {
             try {
                 const accounts = await window.ethereum.request({
@@ -32,7 +35,10 @@ function Web3ContextProvider({ children }) {
                     toast.success("Connected!", toastConfig);
                 }
             } catch (error) {
-                toast.error(error? error.message.slice(0,50) : 'Connection failed', toastConfig);
+                toast.error(
+                    error ? error.message.slice(0, 50) : "Connection failed",
+                    toastConfig
+                );
                 console.error(error);
             }
         } else {
@@ -47,22 +53,28 @@ function Web3ContextProvider({ children }) {
         setConnected(false);
     };
 
-    const getContractWithProvider = (contractAddress,contractABI ) => {
+    const getContractWithProvider = (contractAddress, contractABI) => {
         return new Contract(contractAddress, contractABI, provider);
     };
-    const getContractWithSigner = (contractAddress,contractABI ) => {
+    const getContractWithSigner = (contractAddress, contractABI) => {
         return new Contract(contractAddress, contractABI, signer);
     };
 
     const getTokenBalance = async (address) => {
         if (connected) {
             try {
-                const contract = getContractWithProvider(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
+                const contract = getContractWithProvider(
+                    ASSET_TOKEN_ADDRESS,
+                    ASSET_TOKEN_CONTRACT
+                );
                 const balance = await contract.balanceOf(address);
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
-                 toast.error(error? error.message.slice(0,50) : 'Connection failed', toastConfig);
+                toast.error(
+                    error ? error.message.slice(0, 50) : "Connection failed",
+                    toastConfig
+                );
                 console.error(error);
             }
         }
@@ -75,7 +87,10 @@ function Web3ContextProvider({ children }) {
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
-                 toast.error(error? error.message.slice(0,50) : 'Connection failed', toastConfig);
+                toast.error(
+                    error ? error.message.slice(0, 50) : "Connection failed",
+                    toastConfig
+                );
                 console.error(error);
             }
         }
@@ -102,17 +117,23 @@ function Web3ContextProvider({ children }) {
     const claimFreeTokens = async () => {
         if (account) {
             try {
-                const contract = getContractWithSigner(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
-                await contract.mint(account, utils.parseEther('1000'));
+                const contract = getContractWithSigner(
+                    ASSET_TOKEN_ADDRESS,
+                    ASSET_TOKEN_CONTRACT
+                );
+                await contract.mint(account, utils.parseEther("1000"));
             } catch (error) {
-                 toast.error(error? error.message.slice(0,50) : 'Connection failed', toastConfig);
+                toast.error(
+                    error ? error.message.slice(0, 50) : "Connection failed",
+                    toastConfig
+                );
                 console.error(error);
             }
         }
     };
 
     //Alerts user to switch to a supported network when account is switched from a supported network
-    const handleAccountChanged = useCallback(async () => {
+    const handleAccountChanged = async () => {
         if (account) {
             try {
                 const networkID = await window.ethereum.request({
@@ -128,11 +149,13 @@ function Web3ContextProvider({ children }) {
                     setAccount(accounts[0]);
                 }
             } catch (error) {
-                 toast.error(error? error.message.slice(0,50) : 'Connection failed', toastConfig);
+                toast.error(
+                    error ? error.message.slice(0, 50) : "Connection failed",
+                    toastConfig
+                );
             }
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [account]);
+    };
 
     //Alerts user to switch to a supported network when account is switched from a supported network
     const handleChainChanged = async () => {
@@ -182,13 +205,7 @@ function Web3ContextProvider({ children }) {
         claimFreeTokens,
     };
     return (
-        <Web3Context.Provider
-            value={
-              value
-            }
-        >
-            {children}
-        </Web3Context.Provider>
+        <Web3Context.Provider value={value}>{children}</Web3Context.Provider>
     );
 }
 

@@ -1,23 +1,75 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaWallet } from "react-icons/fa";
 import { shortenAddress } from "../../utils/helper/shortenAddress";
-import Tokens from "./components/tokens/Tokens";
-
+import { Web3Context } from "../../contexts/Web3Context";
+import symbol from "../../assets/png/nahmii-logo.png";
+import GetStarted from "./components/get-started/GetStarted";
+const tokens = [
+    {
+        symbol: "NII",
+        image: symbol,
+        balance: 4.5,
+    },
+];
 function Dashboard() {
-    const account =
-        "0x69ae994ec69b62e2bf59a78d02219b2ee2399c35d44d4d3b4a0e1c3e1e4f38bd";
+    const { connected, account, disconnectWallet } = useContext(Web3Context);
     const connectedAccount = shortenAddress(account);
     return (
-        <div className="grid place-items-center h-screen m-auto w-full">
-            <div>
-                <div className="flex-center-between gap-x-4 ">
-                    <FaWallet className="inline aspect-square w-16 text-cerulean" />
-                    <p>{connectedAccount}</p>
-                </div>
-                <button className="btn-filled px-4 py-2">Disconnect</button>
-            </div>
-            <Tokens />
-        </div>
+        <main className="grid place-items-center h-screen m-auto w-full">
+            {connected ? (
+                <section className="page-content min-w-[50%] max-w-[30rem] text-white">
+                    <div className="flex-center-between w-full">
+                        <div className="flex-center-start gap-x-4 ">
+                            <FaWallet className="inline aspect-square text-5xl text-cerulean" />
+                            <p className="text-white text-xl font-[500]">
+                                {connectedAccount}
+                            </p>
+                        </div>
+                        <button
+                            className="btn-filled px-4 py-2 font-[500]"
+                            onClick={disconnectWallet}
+                        >
+                            Disconnect
+                        </button>
+                    </div>
+                    <ul className="grid h-[80%] content-center grid-flow-row grid-cols-3 gap-x-4">
+                        <li className="dashboard-card">
+                            <h3 className="dashboard-card-header">Tokens</h3>
+                            {tokens.map((token) => (
+                                <p key={token.symbol}>
+                                    <span>{token.balance} </span>
+                                    {token.symbol}
+                                </p>
+                            ))}
+                        </li>
+                        <li className="dashboard-card">
+                            <h3 className="dashboard-card-header">
+                                Bound Assets
+                            </h3>
+                            {tokens.map((token) => (
+                                <p key={token.symbol}>
+                                    <span>{token.balance} </span>
+                                    {token.symbol}
+                                </p>
+                            ))}
+                        </li>
+                        <li className="dashboard-card">
+                            <h3 className="dashboard-card-header">
+                                Staked Assets
+                            </h3>
+                            {tokens.map((token) => (
+                                <p key={token.symbol}>
+                                    <span>{token.balance} </span>
+                                    {token.symbol}
+                                </p>
+                            ))}
+                        </li>
+                    </ul>
+                </section>
+            ) : (
+                <GetStarted />
+            )}
+        </main>
     );
 }
 

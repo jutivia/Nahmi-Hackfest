@@ -137,6 +137,14 @@ input[type="number"] {
         @apply flex items-center justify-end;
     }
 
+    .dashboard-card {
+        @apply flex-start-start bg-[rgba(255,255,255,0.05)] rounded-2xl flex-col h-[10rem] p-2 w-full gap-x-2;
+    }
+
+    .dashboard-card-header {
+        @apply font-[500] text-center  w-full text-cerulean;
+    }
+
     .background {
         background: linear-gradient(to bottom right, #02062b, #68299a);
     }

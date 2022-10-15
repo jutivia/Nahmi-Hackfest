@@ -5,7 +5,7 @@ function Stake() {
     return (
         <Header
             header="Stake"
-            description="Stake liquidity and assets to earn boosted rewards."
+            description="Stake assets to earn boosted rewards. Rewards are added to the principals in real time and auto compounded."
         />
     );
 }
