@@ -4,16 +4,23 @@ import { shortenAddress } from "../../utils/helper/shortenAddress";
 import { Web3Context } from "../../contexts/Web3Context";
 import symbol from "../../assets/png/nahmii-logo.png";
 import GetStarted from "./components/get-started/GetStarted";
-const tokens = [
-    {
-        symbol: "NII",
-        image: symbol,
-        balance: 4.5,
-    },
-];
 function Dashboard() {
-    const { connected, account, disconnectWallet } = useContext(Web3Context);
+    const { connected, account, accountBalance, disconnectWallet } =
+        useContext(Web3Context);
     const connectedAccount = shortenAddress(account);
+    const tokens = [
+        {
+            symbol: "NII",
+            image: symbol,
+            balance: Number(accountBalance.coinBalance).toFixed(2) || 0,
+        },
+        {
+            symbol: "AST",
+            image: symbol,
+            balance: Number(accountBalance.assetTokenBalance) || 0,
+        },
+    ];
+
     return (
         <main className="grid place-items-center h-screen m-auto w-full">
             {connected ? (
@@ -46,23 +53,25 @@ function Dashboard() {
                             <h3 className="dashboard-card-header">
                                 Bound Assets
                             </h3>
-                            {tokens.map((token) => (
-                                <p key={token.symbol}>
-                                    <span>{token.balance} </span>
-                                    {token.symbol}
-                                </p>
-                            ))}
+                            <p>
+                                <span>
+                                    {Number(accountBalance.protocolBalance) ||
+                                        0.0}{" "}
+                                </span>
+                                NIIT
+                            </p>
                         </li>
                         <li className="dashboard-card">
                             <h3 className="dashboard-card-header">
                                 Staked Assets
                             </h3>
-                            {tokens.map((token) => (
-                                <p key={token.symbol}>
-                                    <span>{token.balance} </span>
-                                    {token.symbol}
-                                </p>
-                            ))}
+                            <p>
+                                <span>
+                                    {Number(accountBalance.stakedBalance) ||
+                                        0.0}{" "}
+                                </span>
+                                NIIT
+                            </p>
                         </li>
                     </ul>
                 </section>

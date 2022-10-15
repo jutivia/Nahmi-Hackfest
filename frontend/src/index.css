@@ -136,13 +136,20 @@ input[type="number"] {
     .flex-center-end {
         @apply flex items-center justify-end;
     }
+    .flex-center-evenly {
+        @apply flex items-center justify-evenly;
+    }
 
     .dashboard-card {
-        @apply flex-start-start bg-[rgba(255,255,255,0.05)] rounded-2xl flex-col h-[10rem] p-2 w-full gap-x-2;
+        @apply flex-start-start bg-[rgba(255,255,255,0.05)] rounded-2xl flex-col h-[10rem] p-4 w-full gap-x-4;
+    }
+
+    .dashboard-card p {
+        @apply mb-2;
     }
 
     .dashboard-card-header {
-        @apply font-[500] text-center  w-full text-cerulean;
+        @apply font-[500] text-center  w-full text-cerulean mb-2;
     }
 
     .background {

@@ -2,7 +2,14 @@ import React, { useState, useEffect, createContext } from "react";
 import { ethers, utils, Contract } from "ethers";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {ASSET_TOKEN_CONTRACT, ASSET_TOKEN_ADDRESS, BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT, STAKING_CONTRACT, STAKING_ADDRESS } from '../utils/constants/constants'
+import {
+    ASSET_TOKEN_CONTRACT,
+    ASSET_TOKEN_ADDRESS,
+    BOND_DEPO_ADDRESS,
+    BOND_DEPO_CONTRACT,
+    STAKING_CONTRACT,
+    STAKING_ADDRESS,
+} from "../utils/constants/constants";
 
 export const Web3Context = createContext(null);
 const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
@@ -20,7 +27,8 @@ function Web3ContextProvider({ children }) {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner(account);
-
+    console.log(connected);
+    console.log(account);
     // Requests wallet connection
     const connectWallet = async () => {
         if (connected) return;
@@ -29,9 +37,9 @@ function Web3ContextProvider({ children }) {
                 const accounts = await window.ethereum.request({
                     method: "eth_requestAccounts",
                 });
+                setAccount(accounts[0]);
                 await eagerConnect();
                 if (connected) {
-                    setAccount(accounts[0]);
                     toast.success("Connected!", toastConfig);
                 }
             } catch (error) {
@@ -51,6 +59,7 @@ function Web3ContextProvider({ children }) {
 
     const disconnectWallet = () => {
         setConnected(false);
+        setAccount(null);
     };
 
     const getContractWithProvider = (contractAddress, contractABI) => {
@@ -63,11 +72,14 @@ function Web3ContextProvider({ children }) {
     const getAssetTokenBalance = async (address) => {
         if (!connected) {
             try {
-                const contract = getContractWithSigner(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
-                console.log(contract)
+                const contract = getContractWithSigner(
+                    ASSET_TOKEN_ADDRESS,
+                    ASSET_TOKEN_CONTRACT
+                );
                 const balance = await contract.balanceOf(address);
-                console.log('asset', balance)
+                console.log("asset", balance);
                 const formattedBalance = utils.formatUnits(balance, 18);
+                console.log(formattedBalance);
                 return formattedBalance;
             } catch (error) {
                 toast.error(
@@ -169,6 +181,7 @@ function Web3ContextProvider({ children }) {
             );
         } else {
             setConnected(true);
+            window.location.reload();
         }
     };
 
@@ -183,7 +196,7 @@ function Web3ContextProvider({ children }) {
             coinBalance,
         });
         setAccount(accounts[0]);
-        checkExistingBond(accounts[0])
+        checkExistingBond(accounts[0]);
         setConnected(true);
     };
 
@@ -194,83 +207,123 @@ function Web3ContextProvider({ children }) {
         window.ethereum.on("connect", eagerConnect);
         window.ethereum.on("accountsChanged", handleAccountChanged);
         window.ethereum.on("chainChanged", handleChainChanged);
+        window.ethereum.removeListener("accountsChanged", handleAccountChanged);
+        window.ethereum.removeListener("chainChanged", handleChainChanged);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const bondAST = async(amount) => {
+    const bondAST = async (amount) => {
         try {
-                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
-                const assetContract = getContractWithSigner(ASSET_TOKEN_ADDRESS, ASSET_TOKEN_CONTRACT);
-                await assetContract.approve(BOND_DEPO_ADDRESS, utils.parseEther(amount.toString()))
-                const res = await contract.deposit(utils.parseEther(amount.toString()), account);
-                await res.wait()
-                toast.success('Bond created successfully')
-                const coinBalance = await getCoinBalance(account);
-                const assetTokenBalance = await getAssetTokenBalance(account);
-                setAccountBalance({
-                    assetTokenBalance,
-                    coinBalance,
-                });
+            const contract = getContractWithSigner(
+                BOND_DEPO_ADDRESS,
+                BOND_DEPO_CONTRACT
+            );
+            const assetContract = getContractWithSigner(
+                ASSET_TOKEN_ADDRESS,
+                ASSET_TOKEN_CONTRACT
+            );
+            await assetContract.approve(
+                BOND_DEPO_ADDRESS,
+                utils.parseEther(amount.toString())
+            );
+            const res = await contract.deposit(
+                utils.parseEther(amount.toString()),
+                account
+            );
+            await res.wait();
+            toast.success("Bond created successfully", toastConfig);
+            const coinBalance = await getCoinBalance(account);
+            const assetTokenBalance = await getAssetTokenBalance(account);
+            setAccountBalance({
+                assetTokenBalance,
+                coinBalance,
+            });
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
+    const checkExistingBond = async (addr) => {
+        try {
+            const contract = getContractWithSigner(
+                BOND_DEPO_ADDRESS,
+                BOND_DEPO_CONTRACT
+            );
+            const res = await contract.fetchExistingUserBond(addr);
+            let str = res.toString();
+            str = Number(ethers.utils.formatEther(str));
+            console.log("str", str);
+            setBond(str);
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
+    const checkBondMaturity = async () => {
+        try {
+            const contract = getContractWithSigner(
+                BOND_DEPO_ADDRESS,
+                BOND_DEPO_CONTRACT
+            );
+            const res = await contract.checkMaturity(account);
+            console.log(Number(res.waitingTimeLeft));
+            setMaturity(res.matured);
+            setTimeLeft(Number(res.waitingTimeLeft));
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
+    const stakeBond = async () => {
+        try {
+            const contract = getContractWithSigner(
+                STAKING_ADDRESS,
+                STAKING_CONTRACT
+            );
+            const res = await contract.stakeFromMatureBonds(account);
+            await res.wait();
+            toast.success("Tokens staked successfully", toastConfig);
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
 
-            } catch (error) {
-                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
-                console.error(error.message);
-            }
-    }
-    const checkExistingBond =async (addr) =>{
-         try {
-                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
-                const res = await contract.fetchExistingUserBond(addr);
-                let str = res.toString()
-                str = Number(ethers.utils.formatEther(str))
-                console.log('str', str)
-                setBond(str)
-            } catch (error) {
-                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
-                console.error(error.message);
-            }
-    }
-     const checkBondMaturity =async () =>{
-         try {
-                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
-                const res = await contract.checkMaturity(account);
-                console.log(Number(res.waitingTimeLeft))
-                setMaturity(res.matured,)
-                setTimeLeft(Number(res.waitingTimeLeft))
-            } catch (error) {
-                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
-                console.error(error.message);
-            }
-    }
-     const stakeBond =async () =>{
-         try {
-                const contract = getContractWithSigner(STAKING_ADDRESS, STAKING_CONTRACT);
-                const res = await contract.stakeFromMatureBonds(account);
-                awiat res.wait()
-                toast.success('Tokens staked successfully')
-            } catch (error) {
-                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
-                console.error(error.message);
-            }
-    }
-
-    const withdrawBondTokens =async () =>{
-         try {
-                const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
-                const res = await contract.getTokens();
-                awiat res.wait()
-                toast.success('Transaction successfull')
-                const coinBalance = await getCoinBalance(account);
-                const assetTokenBalance = await getAssetTokenBalance(account);
-                setAccountBalance({
-                    assetTokenBalance,
-                    coinBalance,
-                });
-            } catch (error) {
-                 toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
-                console.error(error.message);
-            }
-    }
+    const withdrawBondTokens = async () => {
+        try {
+            const contract = getContractWithSigner(
+                BOND_DEPO_ADDRESS,
+                BOND_DEPO_CONTRACT
+            );
+            const res = await contract.getTokens();
+            await res.wait();
+            toast.success("Transaction successfull", toastConfig);
+            const coinBalance = await getCoinBalance(account);
+            const assetTokenBalance = await getAssetTokenBalance(account);
+            setAccountBalance({
+                assetTokenBalance,
+                coinBalance,
+            });
+        } catch (error) {
+            toast.error(
+                error ? error.message.slice(0, 73) : "Connection failed",
+                toastConfig
+            );
+            console.error(error.message);
+        }
+    };
     const value = {
         account,
         connected,
@@ -284,7 +337,7 @@ function Web3ContextProvider({ children }) {
         maturity,
         timeLeft,
         stakeBond,
-        withdrawBondTokens
+        withdrawBondTokens,
     };
     return (
         <Web3Context.Provider value={value}>{children}</Web3Context.Provider>

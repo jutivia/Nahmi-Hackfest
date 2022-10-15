@@ -30,46 +30,54 @@ const guides = [
 ];
 function Bond() {
     const [current, setCurrent] = useState(0);
-    const [amount, setAmount] = useState(0)
-    const [NiiTAmount, setNiiTAmount] = useState(0)
-    const [bondToken, setBond] = useState(0)
+    const [amount, setAmount] = useState(0);
+    const [NiiTAmount, setNiiTAmount] = useState(0);
+    const [bondToken, setBond] = useState(0);
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
-    const {  accountBalance, connected, bondAST, bond, checkBondMaturity, maturity, timeLeft, stakeBond, withdrawBondTokens } = useContext(Web3Context);
-    const [balance, setBalance] = useState(0)
-    const [showText, setShowText] = useState(true)
-    const [mature, setMature] = useState(true)
-    const [countdown, setCountdown] = useState(0)
-    // console.log(bond)
-    const formatBalance = ()=> {
-            const amount = Number(accountBalance.assetTokenBalance)
-            setBalance(amount.toFixed(2))
-        }
-        useEffect(()=>{
-            formatBalance()
-        }, [accountBalance])
+    const {
+        accountBalance,
+        connected,
+        bondAST,
+        bond,
+        checkBondMaturity,
+        maturity,
+        timeLeft,
+        stakeBond,
+        withdrawBondTokens,
+    } = useContext(Web3Context);
+    const [balance, setBalance] = useState(0);
+    const [showText, setShowText] = useState(true);
+    const [mature, setMature] = useState(true);
+    const [countdown, setCountdown] = useState(0);
+    const formatBalance = () => {
+        const amount = Number(accountBalance.assetTokenBalance);
+        setBalance(amount.toFixed(2));
+    };
+    useEffect(() => {
+        formatBalance();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [accountBalance]);
 
-        useEffect(()=>{
-             setBond(bond.toFixed(2))
-        }, [bond])
+    useEffect(() => {
+        setBond(bond.toFixed(2));
+    }, [bond]);
 
-        
-        const checkMaturity = ()=>{
-            checkBondMaturity()
-             setShowText(true)
-             setMature(maturity)
-            setCountdown(timeLeft)
-        }
+    const checkMaturity = () => {
+        checkBondMaturity();
+        setShowText(true);
+        setMature(maturity);
+        setCountdown(timeLeft);
+    };
 
-    const handleInput =(e:any):void=>{
+    const handleInput = (e) => {
         setAmount(e.target.value);
         convertToNiit(e.target.value);
-
-    }
-    const convertToNiit = (num)=>{
-        const init= num/20
-        setNiiTAmount(init + (init * 0.04))
-    }
+    };
+    const convertToNiit = (num) => {
+        const init = num / 20;
+        setNiiTAmount(init + init * 0.04);
+    };
     useEffect(() => {
         const nextSlide = () =>
             setCurrent((current) => (current + 1) % guides.length);
@@ -78,8 +86,9 @@ function Bond() {
         }, 5000);
         return () => clearInterval(next);
     }, [current]);
+
     return (
-        <main className="flex-center-between px-[5%] h-full w-full gap-x-20">
+        <main className="flex-center-evenly px-[5%] h-full w-full ">
             <section>
                 <Header
                     header="Bond"
@@ -109,16 +118,49 @@ function Bond() {
                     ))}
                 </div>
                 <div className="flex-center-between gap-x-5 my-5">
-                    <h3 className="text-2xl text-white">Tokens Bounded: {bondToken} NIIT</h3>
-                    {!mature && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
+                    <h3 className="text-2xl text-white">
+                        Tokens Bounded: {bondToken} NIIT
+                    </h3>
+                    {!mature && (
+                        <button className="btn-no-fill" onClick={checkMaturity}>
+                            Check maturity
+                        </button>
+                    )}
                 </div>
-               {showText && <div>
-                    {!mature && <h4 className="text-cerulean font-bold text-2xl my-2"> Your tokens are still brewing! They would be available for use in {countdown} seconds</h4>}
-                    {mature && <div>
-                        <h4 className="text-cerulean font-bold text-2xl my-2"> Tokens are mature, and ready for use!</h4>
-                        <div className="flex-center-center gap-x-10"><button className="btn-no-fill bg-white" onClick={stakeBond}> Stake Tokens</button> <button className="btn-no-fill bg-cerulean text-white" onClick={withdrawBondTokens}>Withdraw Tokens </button></div>
-                        </div>}
-                </div>}
+                {showText && (
+                    <div>
+                        {!mature && (
+                            <h4 className="text-cerulean font-bold text-2xl my-2">
+                                {" "}
+                                Your tokens are still brewing! They would be
+                                available for use in {countdown} seconds
+                            </h4>
+                        )}
+                        {mature && (
+                            <div>
+                                <h4 className="text-cerulean font-bold text-2xl my-2">
+                                    {" "}
+                                    Tokens are mature, and ready for use!
+                                </h4>
+                                <div className="flex-center-start gap-x-8">
+                                    <button
+                                        className="btn-no-fill bg-white"
+                                        onClick={stakeBond}
+                                    >
+                                        {" "}
+                                        Stake Tokens
+                                    </button>{" "}
+                                    <button
+                                        className="btn-no-fill bg-cerulean text-white"
+                                        onClick={withdrawBondTokens}
+                                    >
+                                        Withdraw Tokens{" "}
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
             </section>
 
             <section className="page-content flex-center-between flex-col py-12 w-5/12 text-white">
@@ -130,7 +172,15 @@ function Bond() {
                         <h3>You give</h3>
                         <div className="flex-center-between gap-x-8 ">
                             <p>Balance: {balance} AST</p>
-                            <button className="btn-no-fill" onClick={()=>{setAmount(balance); convertToNiit(balance)}}>Max</button>
+                            <button
+                                className="btn-no-fill"
+                                onClick={() => {
+                                    setAmount(balance);
+                                    convertToNiit(balance);
+                                }}
+                            >
+                                Max
+                            </button>
                         </div>
                     </div>
                     <div className="relative flex-center-between">
@@ -148,7 +198,6 @@ function Bond() {
                                 src={tokenLogo}
                                 alt="AST"
                                 className="aspect-square"
-                                // onClick={expandSearchField}
                             />
                             AST
                         </span>
@@ -173,14 +222,30 @@ function Bond() {
                                 src={tokenLogo}
                                 alt="NIIT"
                                 className="aspect-square"
-                                // onClick={expandSearchField}
                             />
                             NIIT
                         </span>
                     </div>
                 </div>
-               {(Number(amount) <= Number(balance) && amount && connected) && <button className="btn-no-fill" onClick={()=>{bondAST(amount); setAmount(0); setNiiTAmount(0)}}>Confirm</button>}
-                {( Number(amount) > Number(balance) || !amount || !connected ) && <button className="btn-no-fill cursor-not-allowed" >Confirm </button>}
+                {Number(amount) <= Number(balance) && amount && connected && (
+                    <button
+                        className="btn-no-fill"
+                        onClick={() => {
+                            bondAST(amount);
+                            setAmount(0);
+                            setNiiTAmount(0);
+                        }}
+                    >
+                        Confirm
+                    </button>
+                )}
+                {(Number(amount) > Number(balance) ||
+                    !amount ||
+                    !connected) && (
+                    <button className="btn-no-fill ">
+                        {connected ? "Confirm" : "Connect Wallet"}{" "}
+                    </button>
+                )}
             </section>
         </main>
     );
