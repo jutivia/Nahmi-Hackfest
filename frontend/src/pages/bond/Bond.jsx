@@ -30,14 +30,15 @@ const guides = [
 ];
 function Bond() {
     const [current, setCurrent] = useState(0);
-    const [amount, setAmount] = useState(0);
-    const [NiiTAmount, setNiiTAmount] = useState(0);
+    const [amount, setAmount] = useState("");
+    const [NiiTAmount, setNiiTAmount] = useState("");
     const [bondToken, setBond] = useState(0);
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
     const {
         accountBalance,
         connected,
+        connectWallet,
         bondAST,
         bond,
         checkBondMaturity,
@@ -56,20 +57,21 @@ function Bond() {
         munites: 0,
         seconds: 0,
     });
-    // console.log(bond)
+    const validInput =
+        Number(amount) <= Number(balance) && amount > 0 && connected;
     const calcTimeLeft = (b) => {
         let a = b;
 
         let days = Math.floor(a / (3600 * 24));
         a -= days * 3600 * 24;
-        let hrs = Math.floor(a / 3600);
-        a -= hrs * 3600;
-        let mnts = Math.floor(a / 60);
-        a -= mnts * 60;
+        let hours = Math.floor(a / 3600);
+        a -= hours * 3600;
+        let minutes = Math.floor(a / 60);
+        a -= minutes * 60;
         let time = {
-            days: days,
-            hours: hrs,
-            munites: mnts,
+            days,
+            hours,
+            minutes,
             seconds: a,
         };
         return time;
@@ -78,18 +80,20 @@ function Bond() {
     useEffect(() => {
         if (countdown > 0) {
             setTimeLeft(calcTimeLeft(countdown));
-            setTimeout(() => {
-                setCountdown(() => countdown - 1);
-            }, 1000);
         }
+        const count = setTimeout(() => {
+            setCountdown((countdown) => countdown - 1);
+        }, 1000);
+        return () => clearTimeout(count);
     }, [countdown]);
 
     const formatBalance = () => {
         const amount = Number(accountBalance.assetTokenBalance);
-        setBalance(amount.toFixed(2));
+        setBalance(amount.toFixed(2) || 0);
     };
     useEffect(() => {
         formatBalance();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [accountBalance]);
 
     useEffect(() => {
@@ -105,7 +109,7 @@ function Bond() {
         setCountdown(timeLeft);
     }, [timeLeft]);
 
-    const handleInput = (e: any): void => {
+    const handleInput = (e) => {
         setAmount(e.target.value);
         convertToNiit(e.target.value);
     };
@@ -121,6 +125,17 @@ function Bond() {
         }, 5000);
         return () => clearInterval(next);
     }, [current]);
+
+    const handleBondAsset = () => {
+        if (validInput) {
+            bondAST(amount);
+            setAmount("");
+            setNiiTAmount("");
+        }
+        if (!connected) {
+            connectWallet();
+        }
+    };
 
     return (
         <main className="flex-center-evenly px-[5%] h-full w-full ">
@@ -154,7 +169,7 @@ function Bond() {
                 </div>
                 <div className="flex-center-between gap-x-5 my-5">
                     <h3 className="text-2xl font-bold text-white">
-                        Tokens Bounded: {bondToken} NIIT
+                        Bonded Assets: {bondToken} NIIT
                     </h3>
                     {!showText && bondToken > 0 && (
                         <button className="btn-no-fill" onClick={checkMaturity}>
@@ -172,10 +187,10 @@ function Bond() {
                                 </h4>
                                 <p className="text-white text-1xl my-2 max-w-2xl">
                                     {" "}
-                                    They would be available for use in{" "}
+                                    Tokens will be available for use in{" "}
                                     <span className="font-bold">
                                         {time.days} days, {time.hours} hours,{" "}
-                                        {time.munites} minutes and{" "}
+                                        {time.minutes} minutes and{" "}
                                         {time.seconds} seconds
                                     </span>
                                 </p>
@@ -216,7 +231,7 @@ function Bond() {
                     <div className="flex-center-between ">
                         <h3>You give</h3>
                         <div className="flex-center-between gap-x-8 ">
-                            <p>Balance: {balance} AST</p>
+                            <p>Balance: {balance || 0} AST</p>
                             <button
                                 className="btn-no-fill"
                                 onClick={() => {
@@ -272,25 +287,10 @@ function Bond() {
                         </span>
                     </div>
                 </div>
-                {Number(amount) <= Number(balance) && amount && connected && (
-                    <button
-                        className="btn-no-fill"
-                        onClick={() => {
-                            bondAST(amount);
-                            setAmount(0);
-                            setNiiTAmount(0);
-                        }}
-                    >
-                        Confirm
-                    </button>
-                )}
-                {(Number(amount) > Number(balance) ||
-                    !amount ||
-                    !connected) && (
-                    <button className="btn-no-fill ">
-                        {connected ? "Confirm" : "Connect Wallet"}{" "}
-                    </button>
-                )}
+
+                <button className="btn-no-fill" onClick={handleBondAsset}>
+                    {connected ? "Confirm" : "Connect Wallet"}
+                </button>
             </section>
         </main>
     );

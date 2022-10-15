@@ -5,7 +5,7 @@ import { Web3Context } from "../../contexts/Web3Context";
 import symbol from "../../assets/png/nahmii-logo.png";
 import GetStarted from "./components/get-started/GetStarted";
 function Dashboard() {
-    const { connected, account, accountBalance, disconnectWallet } =
+    const { connected, account, accountBalance, disconnectWallet, bond } =
         useContext(Web3Context);
     const connectedAccount = shortenAddress(account);
     const tokens = [
@@ -51,13 +51,10 @@ function Dashboard() {
                         </li>
                         <li className="dashboard-card">
                             <h3 className="dashboard-card-header">
-                                Bound Assets
+                                Bonded Assets
                             </h3>
                             <p>
-                                <span>
-                                    {Number(accountBalance.protocolBalance) ||
-                                        0.0}{" "}
-                                </span>
+                                <span>{bond.toFixed(2) || 0.0} </span>
                                 NIIT
                             </p>
                         </li>

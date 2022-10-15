@@ -27,8 +27,7 @@ function Web3ContextProvider({ children }) {
 
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner(account);
-    console.log(connected);
-    console.log(account);
+
     // Requests wallet connection
     const connectWallet = async () => {
         if (connected) return;
@@ -62,9 +61,9 @@ function Web3ContextProvider({ children }) {
         setAccount(null);
     };
 
-    const getContractWithProvider = (contractAddress, contractABI) => {
-        return new Contract(contractAddress, contractABI, provider);
-    };
+    // const getContractWithProvider = (contractAddress, contractABI) => {
+    //     return new Contract(contractAddress, contractABI, provider);
+    // };
     const getContractWithSigner = (contractAddress, contractABI) => {
         return new Contract(contractAddress, contractABI, signer);
     };
@@ -77,9 +76,7 @@ function Web3ContextProvider({ children }) {
                     ASSET_TOKEN_CONTRACT
                 );
                 const balance = await contract.balanceOf(address);
-                console.log("asset", balance);
                 const formattedBalance = utils.formatUnits(balance, 18);
-                console.log(formattedBalance);
                 return formattedBalance;
             } catch (error) {
                 toast.error(
@@ -238,6 +235,10 @@ function Web3ContextProvider({ children }) {
                 assetTokenBalance,
                 coinBalance,
             });
+            const reload = setTimeout(() => {
+                window.location.reload();
+            }, 3500);
+            return () => clearTimeout(reload);
         } catch (error) {
             toast.error(
                 error ? error.message.slice(0, 73) : "Connection failed",
@@ -255,7 +256,6 @@ function Web3ContextProvider({ children }) {
             const res = await contract.fetchExistingUserBond(addr);
             let str = res.toString();
             str = Number(ethers.utils.formatEther(str));
-            console.log("str", str);
             setBond(str);
         } catch (error) {
             toast.error(
