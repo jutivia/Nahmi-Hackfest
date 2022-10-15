@@ -175,7 +175,6 @@ let time = {
                             value={amount}
                             onChange={handleInput}
                             className="input-field py-8"
-                            max="1000"
                         />
                         <span className="bg-white flex-center-start gap-x-2 w-8 rounded-2xl ml-4 absolute hover:opacity-50">
                             <img
