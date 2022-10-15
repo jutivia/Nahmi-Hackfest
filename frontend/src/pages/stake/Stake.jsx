@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { motion } from "framer-motion";
 import { Header } from "../../components";
 import { Web3Context } from "../../contexts/Web3Context";
 import tokenLogo from "../../assets/png/nahmii-logo.png";
@@ -97,7 +98,13 @@ function Stake() {
         return () => clearInterval(next);
     }, [current]);
     return (
-        <main className="flex-center-evenly px-[5%] h-full w-full">
+        <motion.main
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex-center-evenly px-[5%] h-full w-full"
+        >
             <section>
                 <Header
                     header="Stake"
@@ -274,7 +281,7 @@ function Stake() {
                     </div>
                 )}
             </section>
-        </main>
+        </motion.main>
     );
 }
 

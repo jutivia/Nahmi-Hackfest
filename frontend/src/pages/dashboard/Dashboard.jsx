@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { motion } from "framer-motion";
 import { FaWallet } from "react-icons/fa";
 import { shortenAddress } from "../../utils/helper/shortenAddress";
 import { Web3Context } from "../../contexts/Web3Context";
@@ -28,7 +29,13 @@ function Dashboard() {
     ];
 
     return (
-        <main className="grid place-items-center h-screen m-auto w-full">
+        <motion.main
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="grid place-items-center h-screen m-auto w-full"
+        >
             {connected ? (
                 <section className="page-content min-w-[50%] max-w-[30rem] text-white">
                     <div className="flex-center-between w-full">
@@ -78,7 +85,7 @@ function Dashboard() {
             ) : (
                 <GetStarted />
             )}
-        </main>
+        </motion.main>
     );
 }
 
