@@ -229,7 +229,7 @@ function Web3ContextProvider({ children }) {
          try {
                 const contract = getContractWithSigner(STAKING_ADDRESS, STAKING_CONTRACT);
                 const res = await contract.stakeFromMatureBonds(account);
-                awiat res.wait()
+                await res.wait()
                 toast.success('Tokens staked successfully')
             } catch (error) {
                  toast.error(error? error.message.slice(0,73) : 'Connection failed', toastConfig);
@@ -241,7 +241,7 @@ function Web3ContextProvider({ children }) {
          try {
                 const contract = getContractWithSigner(BOND_DEPO_ADDRESS, BOND_DEPO_CONTRACT);
                 const res = await contract.getTokens();
-                awiat res.wait()
+                await res.wait();
                 toast.success('Transaction successfull')
                 const coinBalance = await getCoinBalance(account);
                 const assetTokenBalance = await getAssetTokenBalance(account);
