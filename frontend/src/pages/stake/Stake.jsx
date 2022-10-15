@@ -10,19 +10,19 @@ const guides = [
             "Input the desired amount of NIIT tokens you wish to stake from your NIIT wallet balance. You're required to own NIIt to perform this operation",
     },
     {
-        sn: 2,
+        sn: 1,
         header: "Approve & confirm transaction",
         message:
             "Grant the protocol approval and confirm the transaction to stake your protocol tokens.",
     },
     {
-        sn: 3,
+        sn: 2,
         header: "Receive tokens & accrue interest",
         message:
             "A successful transaction will result in a stake of your tokens at a ROI of 50% annually, accumulated per second after the 7 days wait period",
     },
     {
-        sn: 4,
+        sn: 3,
         header: "Withdraw staked tokens with interest",
         message:
             "After staking, you can withdraw your stked tokens at any time, with acumulated interest (interest start counting from 7 days after the last time staked)",
