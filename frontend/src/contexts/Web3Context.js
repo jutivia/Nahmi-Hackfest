@@ -84,9 +84,7 @@ function Web3ContextProvider({ children }) {
                     ASSET_TOKEN_ADDRESS,
                     ASSET_TOKEN_CONTRACT
                 );
-                console.log(contract);
                 const balance = await contract.balanceOf(address);
-                console.log("asset", balance);
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
@@ -105,9 +103,7 @@ function Web3ContextProvider({ children }) {
                     NIIT_ADDRESS,
                     NIIT_CONTRACT
                 );
-                console.log(contract);
                 const balance = await contract.balanceOf(address);
-                console.log("niit", balance);
                 const formattedBalance = utils.formatUnits(balance, 18);
                 return formattedBalance;
             } catch (error) {
