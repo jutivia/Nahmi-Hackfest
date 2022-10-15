@@ -40,7 +40,39 @@ function Bond() {
     const [showText, setShowText] = useState(false)
     const [mature, setMature] = useState(false)
     const [countdown, setCountdown] = useState(0)
+    const [time,setTimeLeft ] = useState({
+        days: 0,
+        hours: 0,
+        munites: 0,
+        seconds: 0
+    })
     // console.log(bond)
+    const calcTimeLeft = (b) =>{
+        let a = b
+    
+    let days = Math.floor(a / (3600*24));
+     a  -= days*3600*24;
+    let hrs   = Math.floor(a / 3600);
+    a  -= hrs*3600;
+    let mnts = Math.floor(a / 60);
+    a  -= mnts*60;
+let time = {
+     days: days,
+        hours: hrs,
+        munites: mnts,
+        seconds: a
+         }
+    return time
+    }
+
+    useEffect(() => {
+    if(countdown > 0){
+        setTimeLeft(calcTimeLeft(countdown));
+       setTimeout(() => { setCountdown(()=> countdown-1 )}, 1000)
+        
+}
+}, [countdown]);
+
     const formatBalance = ()=> {
             const amount = Number(accountBalance.assetTokenBalance)
             setBalance(amount.toFixed(2))
@@ -58,8 +90,10 @@ function Bond() {
             checkBondMaturity()
              setShowText(true)
              setMature(maturity)
-            setCountdown(timeLeft)
         }
+        useEffect(()=>{
+             setCountdown(timeLeft)
+        },[timeLeft])
 
     const handleInput =(e:any):void=>{
         setAmount(e.target.value);
@@ -113,7 +147,7 @@ function Bond() {
                     {(!mature && bondToken) && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
                 </div>
                {showText && <div>
-                    {!mature && <h4 className="text-cerulean font-bold text-2xl my-2"> Your tokens are still brewing! They would be available for use in {countdown} seconds</h4>}
+                    {!mature && <h4 className="text-cerulean font-bold text-2xl my-2"> Your tokens are still brewing! They would be available for use in {time.days} days, {time.hours} hours, {time.munites} minutes and {time.seconds} seconds</h4>}
                     {mature && <div>
                         <h4 className="text-cerulean font-bold text-2xl my-2"> Tokens are mature, and ready for use!</h4>
                         <div className="flex-center-center gap-x-10"><button className="btn-no-fill bg-white" onClick={stakeBond}> Stake Tokens</button> <button className="btn-no-fill bg-cerulean text-white" onClick={withdrawBondTokens}>Withdraw Tokens </button></div>
