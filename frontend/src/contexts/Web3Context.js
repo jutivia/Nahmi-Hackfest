@@ -69,7 +69,7 @@ function Web3ContextProvider({ children }) {
         const reload = setTimeout(() => {
             window.location.reload();
         }, 5000);
-        return clearTimeout(reload);
+        // clearTimeout(reload);
     };
     // const getContractWithProvider = (contractAddress, contractABI) => {
     //     return new Contract(contractAddress, contractABI, provider);

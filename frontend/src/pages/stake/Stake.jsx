@@ -75,18 +75,18 @@ function Stake() {
             stakeTokens(amount);
             setAmount("");
         }
-        if (!connected) {
-            connectWallet();
-        }
+        // if (!connected) {
+        //     connectWallet();
+        // }
     };
     const onWithdraw = () => {
         if (validWithdrawal) {
             withdrawStakedTokens(amount);
             setWithdrawAmount("");
         }
-        if (!connected) {
-            connectWallet();
-        }
+        // if (!connected) {
+        //     connectWallet();
+        // }
     };
 
     useEffect(() => {
@@ -225,10 +225,10 @@ function Stake() {
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
-                                className="btn-no-fill mx-auto"
+                                className={`btn-no-fill ${validStake? '': 'disabled' }`}
                                 onClick={onStake}
                             >
-                                {connected ? "Confirm" : "Connect Wallet"}
+                                Confirm
                             </button>
                         </div>
                     </div>
@@ -274,10 +274,10 @@ function Stake() {
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
-                                className="btn-no-fill mx-auto"
+                                className={`btn-no-fill ${validWithdrawal? '': 'disabled' }`}
                                 onClick={onWithdraw}
                             >
-                                {connected ? "Confirm" : "Connect Wallet"}
+                                Confirm
                             </button>
                         </div>
                     </div>

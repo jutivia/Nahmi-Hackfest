@@ -133,9 +133,9 @@ function Bond() {
             setAmount("");
             setNiiTAmount("");
         }
-        if (!connected) {
-            connectWallet();
-        }
+        // if (!connected) {
+        //     connectWallet();
+        // }
     };
 
     const setMax = () => {
@@ -305,8 +305,8 @@ function Bond() {
                     </div>
                 </div>
 
-                <button className="btn-no-fill" onClick={handleBondAsset}>
-                    {connected ? "Confirm" : "Connect Wallet"}
+                <button className={`btn-no-fill ${validInput? '': 'disabled' }`} onClick={handleBondAsset}>
+                   Confirm
                 </button>
             </section>
         </motion.main>
