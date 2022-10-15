@@ -132,11 +132,13 @@ function Stake() {
                         ></span>
                     ))}
                 </div>
-                <div className="flex-center-between gap-x-5 my-5">
-                    <h3 className="text-2xl font-bold text-white">
-                        Stake Balance: {staked.toFixed(2) || 0} NIIT
-                    </h3>
-                </div>
+                {connected && (
+                    <div className="flex-center-between gap-x-5 my-5">
+                        <h3 className="text-2xl font-bold text-white">
+                            Stake Balance: {staked.toFixed(2) || 0} NIIT
+                        </h3>
+                    </div>
+                )}
             </section>
 
             <section className="page-content flex-center-start gap-y-12 flex-col py-12 w-5/12 text-white">
