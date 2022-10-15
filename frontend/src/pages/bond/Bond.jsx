@@ -144,7 +144,7 @@ let time = {
                 </div>
                 <div className="flex-center-between gap-x-5 my-5">
                     <h3 className="text-2xl font-bold text-white">Tokens Bounded:  {bondToken} NIIT</h3>
-                    {(!showText && bondToken) && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
+                    {(!showText && bondToken > 0) && <button className="btn-no-fill" onClick={checkMaturity}>Check maturity</button>}
                 </div>
                {showText && <div>
                     {!mature && <><h4 className="text-cerulean text-2xl my-2 max-w-2xl font-bold"> Your tokens are still brewing!</h4><p className="text-white text-1xl my-2 max-w-2xl"> They would be available for use in <span className="font-bold">{time.days} days, {time.hours} hours, {time.munites} minutes and {time.seconds} seconds</span></p></>}
