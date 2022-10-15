@@ -156,7 +156,7 @@ function Bond() {
             <section>
                 <Header
                     header="Bond"
-                    description=" Bond your assets and earn Nahmii DAO tokens at a discount."
+                    description=" Bond your assets and earn NIIT tokens at a discount."
                 />
 
                 <div className=" flex-start-start mt-8 max-w-[40rem] h-28 glass p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">

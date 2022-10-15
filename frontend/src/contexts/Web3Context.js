@@ -44,6 +44,7 @@ function Web3ContextProvider({ children }) {
                 await eagerConnect();
                 if (connected) {
                     toast.success("Connected!", toastConfig);
+                     window.location.reload(false);
                 }
             } catch (error) {
                 toast.error(
