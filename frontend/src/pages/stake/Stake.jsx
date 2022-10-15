@@ -35,7 +35,6 @@ function Stake() {
     const {
         accountBalance,
         connected,
-        connectWallet,
         staked,
         stakeTokens,
         withdrawStakedTokens,
@@ -225,7 +224,9 @@ function Stake() {
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
-                                className={`btn-no-fill ${validStake? '': 'disabled' }`}
+                                className={`btn-no-fill ${
+                                    validStake ? "" : "disabled"
+                                }`}
                                 onClick={onStake}
                             >
                                 Confirm
@@ -274,7 +275,9 @@ function Stake() {
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
-                                className={`btn-no-fill ${validWithdrawal? '': 'disabled' }`}
+                                className={`btn-no-fill ${
+                                    validWithdrawal ? "" : "disabled"
+                                }`}
                                 onClick={onWithdraw}
                             >
                                 Confirm

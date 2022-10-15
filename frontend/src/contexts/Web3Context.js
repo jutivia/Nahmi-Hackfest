@@ -44,7 +44,7 @@ function Web3ContextProvider({ children }) {
                 await eagerConnect();
                 if (connected) {
                     toast.success("Connected!", toastConfig);
-                     window.location.reload(false);
+                    window.location.reload(false);
                 }
             } catch (error) {
                 toast.error(
@@ -66,10 +66,9 @@ function Web3ContextProvider({ children }) {
         setAccount(null);
     };
     const refreshState = () => {
-        const reload = setTimeout(() => {
+        setTimeout(() => {
             window.location.reload();
         }, 5000);
-        // clearTimeout(reload);
     };
     // const getContractWithProvider = (contractAddress, contractABI) => {
     //     return new Contract(contractAddress, contractABI, provider);

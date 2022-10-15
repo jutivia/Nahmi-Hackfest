@@ -8,8 +8,7 @@ const guides = [
     {
         sn: 0,
         header: "Pick asset to bond",
-        message:
-            "Mint the test asset tokens from the protocol's AST faucet.",
+        message: "Mint the test asset tokens from the protocol's AST faucet.",
     },
     {
         sn: 1,
@@ -39,7 +38,6 @@ function Bond() {
     const {
         accountBalance,
         connected,
-        connectWallet,
         bondAST,
         bond,
         checkBondMaturity,
@@ -305,8 +303,11 @@ function Bond() {
                     </div>
                 </div>
 
-                <button className={`btn-no-fill ${validInput? '': 'disabled' }`} onClick={handleBondAsset}>
-                   Confirm
+                <button
+                    className={`btn-no-fill ${validInput ? "" : "disabled"}`}
+                    onClick={handleBondAsset}
+                >
+                    Confirm
                 </button>
             </section>
         </motion.main>
