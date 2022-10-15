@@ -65,7 +65,7 @@ function Stake() {
                     header="Stake"
                     description="Stake liquidity and assets to earn boosted rewards."
                 />
-                 <div className=" flex-start-start mt-8 max-w-[40rem] h-32 glass p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">
+                 <div className=" flex-start-start mt-8 max-w-[40rem] h-auto glass p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">
                     <div className="flex-center-start gap-x-4 mb-2">
                         <span className="text-cerulean font-bold">{`${sn + 1}/${
                             guides.length
