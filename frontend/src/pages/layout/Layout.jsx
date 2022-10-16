@@ -7,14 +7,14 @@ import { Navbar } from "../../components";
 
 const Layout = () => {
     return (
-        <main>
+        <main className="max-w-[1440px] mx-auto">
             <Navbar />
             <motion.section
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
-                className="h-[90vh] w-full background flex-start-start flex-col"
+                className="h-[90vh] w-full flex-start-start flex-col"
             >
                 <Outlet />
                 <ToastContainer />

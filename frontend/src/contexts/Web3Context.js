@@ -221,18 +221,22 @@ function Web3ContextProvider({ children }) {
         connectWallet();
         const accounts = await provider.listAccounts();
         if (!accounts.length) return;
-        const coinBalance = await getCoinBalance(accounts[0]);
-        const assetTokenBalance = await getAssetTokenBalance(accounts[0]);
-        const NiitBalance = await getNIITBalance(accounts[0]);
-        setAccountBalance({
-            assetTokenBalance,
-            coinBalance,
-            NiitBalance,
-        });
-        setAccount(accounts[0]);
-        checkExistingBond(accounts[0]);
-        checkStakingBalance(accounts[0]);
-        setConnected(true);
+        if(!connected){
+
+                 const coinBalance = await getCoinBalance(accounts[0]);
+                const assetTokenBalance = await getAssetTokenBalance(accounts[0]);
+                const NiitBalance = await getNIITBalance(accounts[0]);
+                setAccountBalance({
+                    assetTokenBalance,
+                    coinBalance,
+                    NiitBalance,
+                });
+                setAccount(accounts[0]);
+                checkExistingBond(accounts[0]);
+                checkStakingBalance(accounts[0]);
+       
+    }
+        // setConnected(true);
     };
 
     useEffect(() => {

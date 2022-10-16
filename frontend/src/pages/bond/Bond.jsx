@@ -289,7 +289,10 @@ function Bond() {
                 </div>
                 <div className="w-full grid gap-y-4">
                     <div>
-                        <h3>You get</h3>
+                        <h3>You get <span className="text-xs font-thin">
+                                            {" "}
+                                            (4% discount included){" "}
+                                        </span></h3>
                     </div>
                     <div className="relative flex-center-between">
                         <input

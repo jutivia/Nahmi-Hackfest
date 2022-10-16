@@ -33,6 +33,7 @@ body {
     text-rendering: optimizeSpeed;
     font-weight: normal;
     width: 100%;
+    background: linear-gradient(to bottom right, #02062b, #68299a);
 }
 
 input::-webkit-outer-spin-button,
