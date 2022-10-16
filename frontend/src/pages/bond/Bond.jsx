@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Header } from "../../components";
 import tokenLogo from "../../assets/png/nahmii-logo.png";
 import { Web3Context } from "../../contexts/Web3Context";
+import { toast } from "react-toastify";
+const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
 
 const guides = [
     {
@@ -34,6 +36,8 @@ function Bond() {
     const [NiiTAmount, setNiiTAmount] = useState("");
     const [bondToken, setBond] = useState(0);
     const activeGuide = guides[current];
+    const[showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
     const { sn, header, message } = activeGuide;
     const {
         accountBalance,
@@ -130,10 +134,15 @@ function Bond() {
             bondAST(amount);
             setAmount("");
             setNiiTAmount("");
+        }else if(!validInput && connected) {
+            setError("Invalid AST amount");
+            setShowError(true)
+            setTimeout(()=>{
+                setShowError(false)
+            }, 2000)
+        } else if (!connected) {
+           toast.error("Connect your wallet to activate button", toastConfig);
         }
-        // if (!connected) {
-        //     connectWallet();
-        // }
     };
 
     const setMax = () => {
@@ -301,6 +310,7 @@ function Bond() {
                             NIIT
                         </span>
                     </div>
+                    {showError && <p className="text-red"> {error}</p> }
                 </div>
 
                 <button
