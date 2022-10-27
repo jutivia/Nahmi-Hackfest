@@ -146,8 +146,8 @@ function Web3ContextProvider({ children }) {
         }
         const accounts = await provider.listAccounts();
         if (!accounts.length) return;
-        // await updateAccountData()
         setConnected(true);
+
     };
 
     const claimFreeTokens = async () => {
@@ -234,6 +234,7 @@ function Web3ContextProvider({ children }) {
                 setAccount(accounts[0]);
                 checkExistingBond(accounts[0]);
                 checkStakingBalance(accounts[0]);
+                checkBondMaturity()
        
     }
         // setConnected(true);
@@ -312,14 +313,16 @@ function Web3ContextProvider({ children }) {
                 BOND_DEPO_ADDRESS,
                 BOND_DEPO_CONTRACT
             );
-            const res = await contract.checkMaturity(account);
+            const accounts = await provider.listAccounts();
+            const res = await contract.checkMaturity(accounts[0]);
+            console.log(res)
             setMaturity(res.matured);
             setTimeLeft(Number(res.waitingTimeLeft));
         } catch (error) {
-            toast.error(
-                error ? error.message.slice(0, 73) : "Connection failed",
-                toastConfig
-            );
+            // toast.error(
+            //     error ? error.message.slice(0, 73) : "Connection failed",
+            //     toastConfig
+            // );
             console.error(error.message);
         }
     };
@@ -329,7 +332,7 @@ function Web3ContextProvider({ children }) {
                 STAKING_ADDRESS,
                 STAKING_CONTRACT
             );
-            const res = await contract.stakeFromMatureBonds(account);
+            const res = await contract.stakeFromMatureBonds();
             await res.wait();
             toast.success("Tokens staked successfully", toastConfig);
             refreshState();
@@ -399,6 +402,7 @@ function Web3ContextProvider({ children }) {
                 STAKING_ADDRESS,
                 STAKING_CONTRACT
             );
+            console.log(ethers.utils.parseEther(amount))
             const res = await contract.withdrawStake(
                 ethers.utils.parseEther(amount)
             );

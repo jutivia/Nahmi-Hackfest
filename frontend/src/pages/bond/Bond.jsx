@@ -105,9 +105,10 @@ function Bond() {
 
     const checkMaturity = () => {
         checkBondMaturity();
-        setShowText(true);
         setMature(maturity);
+        setShowText(true);
     };
+    
     useEffect(() => {
         setCountdown(timeLeft);
     }, [timeLeft]);
@@ -229,7 +230,7 @@ function Bond() {
                                             Tokens are mature, and ready for
                                             use!
                                         </h4>
-                                        <div className="flex-center-center gap-x-10">
+                                        <div className="flex-center-start gap-x-10">
                                             <button
                                                 className="btn-no-fill bg-white"
                                                 onClick={stakeBond}
