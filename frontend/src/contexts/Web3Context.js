@@ -315,7 +315,6 @@ function Web3ContextProvider({ children }) {
             );
             const accounts = await provider.listAccounts();
             const res = await contract.checkMaturity(accounts[0]);
-            console.log(res)
             setMaturity(res.matured);
             setTimeLeft(Number(res.waitingTimeLeft));
         } catch (error) {
@@ -402,7 +401,7 @@ function Web3ContextProvider({ children }) {
                 STAKING_ADDRESS,
                 STAKING_CONTRACT
             );
-            console.log(ethers.utils.parseEther(amount))
+            // console.log(amount)
             const res = await contract.withdrawStake(
                 ethers.utils.parseEther(amount)
             );

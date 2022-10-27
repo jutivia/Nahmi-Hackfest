@@ -90,7 +90,7 @@ function Stake() {
     };
     const onWithdraw = () => {
         if (validWithdrawal) {
-            withdrawStakedTokens(amount);
+            withdrawStakedTokens(withdrawAmount);
             setWithdrawAmount("");
         } else if(!validWithdrawal && connected) {
             setError("Invalid withdrawal amount");
