@@ -33,7 +33,8 @@ body {
     text-rendering: optimizeSpeed;
     font-weight: normal;
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
+    overflow-y: auto;
     background: linear-gradient(to bottom right, #02062b, #68299a);
 }
 

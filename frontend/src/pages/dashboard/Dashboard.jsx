@@ -41,12 +41,6 @@ function Dashboard() {
             transition={{ duration: 0.5 }}
             className="h-screen m-auto w-full"
         >
-            <h1 className="font-black gradient-text text-center pt-4 md:pt-8 zeus-text">
-                ZEUS PROTOCOL
-            </h1>
-            <p className="text-white text-center font-[500] sub-heading">
-                Bond, Stake, Earn, Trade
-            </p>
             {connected ? (
                 <section className="page-content min-w-[50%]  text-white mx-auto w-full">
                     <div className="flex-center-between w-full">

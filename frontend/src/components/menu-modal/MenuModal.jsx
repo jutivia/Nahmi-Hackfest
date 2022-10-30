@@ -4,6 +4,11 @@ import DisconnectWallet from "../buttons/disconnect-wallet/DisconnectWallet";
 
 function MenuModal() {
     const { isOpen, toggleMenu } = useContext(MenuContext);
+    if (isOpen && typeof window !== "undefined" && window.document) {
+        document.body.style.overflowY = "hidden";
+    } else {
+        document.body.style.overflowY = "auto";
+    }
     return (
         isOpen && (
             <section

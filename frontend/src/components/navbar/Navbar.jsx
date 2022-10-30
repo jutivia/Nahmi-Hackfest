@@ -7,7 +7,7 @@ import MenuButton from "../buttons/menu-button/MenuButton";
 import MenuModal from "../menu-modal/MenuModal";
 
 const menuLinks = [
-    { name: "Dashboard", path: "/" },
+    { name: "Dashboard", path: "/dashboard" },
     { name: "Bond", path: "/bond" },
     { name: "Stake", path: "/stake" },
     { name: "Trade", path: "/trade" },
@@ -24,14 +24,18 @@ const Navbar = () => {
     return (
         <nav className="bg-richBlack text-white h-[10vh] flex-center-between px-4 sm:px-8 font-[500] w-full">
             <div className="flex-center-between gap-x-4">
-                <div className="nav-logo xs:w-[6rem] sm:w-[8rem]">
+                <Link
+                    onClick={() => handleSelectedLink(null)}
+                    to="/"
+                    className="nav-logo xs:w-[6rem] sm:w-[8rem]"
+                >
                     <img
                         src={nahmiiLogo}
                         alt="Nahmii logo"
                         className="aspect-auto w-full"
                     />
-                </div>
-                <div className="text-center w-full mx-auto flex-center-center gap-x-[0.25rem] sm:gap-x-4 absolute bottom-0 left-0 right-0 bg-richBlack lg:relative ">
+                </Link>
+                <div className="text-center w-full mx-auto flex-center-center gap-x-[0.25rem] sm:gap-x-4 absolute z-[999] bottom-0 left-0 right-0 bg-richBlack lg:relative ">
                     {menuLinks.map((menuLink) => (
                         <Link
                             to={menuLink.path}
