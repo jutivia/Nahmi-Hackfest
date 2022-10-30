@@ -54,7 +54,9 @@ function Dashboard() {
                     </div>
                     <ul className="grid h-[80%] content-center grid-flow-row grid-cols-3 gap-x-4">
                         <li className="dashboard-card">
-                            <h3 className="dashboard-card-header text-left font-bold">Tokens</h3>
+                            <h3 className="dashboard-card-header text-left font-bold">
+                                Tokens
+                            </h3>
                             {tokens.map((token) => (
                                 <p key={token.symbol}>
                                     <span>{token.balance} </span>

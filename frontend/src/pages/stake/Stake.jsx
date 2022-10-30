@@ -8,7 +8,7 @@ const guides = [
         sn: 0,
         header: "Input amount to stake",
         message:
-            "Input the desired amount of NIIT tokens you wish to stake from your NIIT wallet balance. You're required to own NIIT to perform this operation",
+            "Input the desired amount of NIIT tokens you wish to stake from your NIIT wallet balance.",
     },
     {
         sn: 1,
@@ -74,18 +74,12 @@ function Stake() {
             stakeTokens(amount);
             setAmount("");
         }
-        // if (!connected) {
-        //     connectWallet();
-        // }
     };
     const onWithdraw = () => {
         if (validWithdrawal) {
             withdrawStakedTokens(amount);
             setWithdrawAmount("");
         }
-        // if (!connected) {
-        //     connectWallet();
-        // }
     };
 
     useEffect(() => {
