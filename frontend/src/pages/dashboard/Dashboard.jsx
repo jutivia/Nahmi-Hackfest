@@ -39,10 +39,16 @@ function Dashboard() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="grid place-items-center h-screen m-auto w-full"
+            className="h-screen m-auto w-full"
         >
+            <h1 className="font-black gradient-text text-center pt-4 md:pt-8 zeus-text">
+                ZEUS PROTOCOL
+            </h1>
+            <p className="text-white text-center font-[500] sub-heading">
+                Bond, Stake, Earn, Trade
+            </p>
             {connected ? (
-                <section className="page-content min-w-[50%] max-w-[30rem] text-white">
+                <section className="page-content min-w-[50%]  text-white mx-auto w-full">
                     <div className="flex-center-between w-full">
                         <div className="flex-center-start gap-x-4 ">
                             <FaWallet className="inline aspect-square text-5xl text-cerulean" />
@@ -50,12 +56,6 @@ function Dashboard() {
                                 {connectedAccount}
                             </p>
                         </div>
-                        <button
-                            className="btn-filled px-4 py-2 font-[500]"
-                            onClick={disconnectWallet}
-                        >
-                            Disconnect
-                        </button>
                     </div>
                     <ul className="grid h-[80%] content-center grid-flow-row grid-cols-3 gap-x-4 text-sm">
                         <li className="dashboard-card">

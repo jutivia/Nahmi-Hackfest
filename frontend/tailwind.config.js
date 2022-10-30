@@ -23,9 +23,12 @@ module.exports = {
             purple: "#68299A",
             violet: "#902784",
             deepCerise: "#DC398C",
-            red: "#EE4B2B"
+            red: "#EE4B2B",
         },
         screens: {
+            xs: "300px",
+            // => @media (min-width: 640px) { ... }
+
             sm: "640px",
             // => @media (min-width: 640px) { ... }
 
