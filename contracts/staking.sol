@@ -45,7 +45,7 @@ contract Staking{
     }
 
     function stake(uint256 _amount) external{
-        require(IERC20(NiitERC20Addr).transferFrom(msg.sender, VaultAddress, _amount), 'Er3: Asset transfer failed');
+       INahmiiERC20Token(NiitERC20Addr).burnFrom(msg.sender, _amount);
         _stake(_amount);
     }
 

@@ -19,7 +19,7 @@ const Navbar = () => {
         setActiveLink(selected);
     };
     return (
-        <nav className="bg-richBlack text-white h-[10vh] flex-center-between px-8 font-[500]">
+        <nav className="bg-richBlack text-white h-[10vh] flex-center-between px-8 font-[500] w-full">
             <div className="flex-center-between gap-x-4">
                 <div className="w-[8rem]">
                     <img

@@ -22,6 +22,11 @@ function Dashboard() {
             balance: Number(accountBalance.coinBalance).toFixed(2) || 0,
         },
         {
+            symbol: "NIIT",
+            image: symbol,
+            balance: Number(accountBalance.NiitBalance).toFixed(2) || 0,
+        },
+        {
             symbol: "AST",
             image: symbol,
             balance: Number(accountBalance.assetTokenBalance).toFixed(2) || 0,
@@ -52,10 +57,10 @@ function Dashboard() {
                             Disconnect
                         </button>
                     </div>
-                    <ul className="grid h-[80%] content-center grid-flow-row grid-cols-3 gap-x-4">
+                    <ul className="grid h-[80%] content-center grid-flow-row grid-cols-3 gap-x-4 text-sm">
                         <li className="dashboard-card">
-                            <h3 className="dashboard-card-header text-left font-bold">
-                                Tokens
+                            <h3 className="dashboard-card-header text-left font-bold ">
+                                Tokens (in wallet)
                             </h3>
                             {tokens.map((token) => (
                                 <p key={token.symbol}>
@@ -66,7 +71,7 @@ function Dashboard() {
                         </li>
                         <li className="dashboard-card">
                             <h3 className="dashboard-card-header text-left font-bold">
-                                Bonded Assets
+                                Bonded Token Balance
                             </h3>
                             <p>
                                 <span>{bond.toFixed(2) || 0} </span>
@@ -75,7 +80,7 @@ function Dashboard() {
                         </li>
                         <li className="dashboard-card">
                             <h3 className="dashboard-card-header text-left font-bold">
-                                Staked Assets
+                                Staked Token Balance
                             </h3>
                             <p>
                                 <span>{staked.toFixed(2) || 0} </span>

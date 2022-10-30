@@ -23,6 +23,7 @@ module.exports = {
             purple: "#68299A",
             violet: "#902784",
             deepCerise: "#DC398C",
+            red: "#EE4B2B"
         },
         screens: {
             sm: "640px",

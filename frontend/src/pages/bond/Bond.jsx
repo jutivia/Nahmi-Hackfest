@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Header } from "../../components";
 import tokenLogo from "../../assets/png/nahmii-logo.png";
 import { Web3Context } from "../../contexts/Web3Context";
+import { toast } from "react-toastify";
+const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
 
 const guides = [
     {
@@ -34,6 +36,8 @@ function Bond() {
     const [NiiTAmount, setNiiTAmount] = useState("");
     const [bondToken, setBond] = useState(0);
     const activeGuide = guides[current];
+    const[showError, setShowError] = useState(false)
+    const [error, setError] = useState('')
     const { sn, header, message } = activeGuide;
     const {
         accountBalance,
@@ -101,9 +105,10 @@ function Bond() {
 
     const checkMaturity = () => {
         checkBondMaturity();
-        setShowText(true);
         setMature(maturity);
+        setShowText(true);
     };
+    
     useEffect(() => {
         setCountdown(timeLeft);
     }, [timeLeft]);
@@ -130,10 +135,15 @@ function Bond() {
             bondAST(amount);
             setAmount("");
             setNiiTAmount("");
+        }else if(!validInput && connected) {
+            setError("Invalid AST amount");
+            setShowError(true)
+            setTimeout(()=>{
+                setShowError(false)
+            }, 2000)
+        } else if (!connected) {
+           toast.error("Connect your wallet to activate button", toastConfig);
         }
-        // if (!connected) {
-        //     connectWallet();
-        // }
     };
 
     const setMax = () => {
@@ -220,7 +230,7 @@ function Bond() {
                                             Tokens are mature, and ready for
                                             use!
                                         </h4>
-                                        <div className="flex-center-center gap-x-10">
+                                        <div className="flex-center-start gap-x-10">
                                             <button
                                                 className="btn-no-fill bg-white"
                                                 onClick={stakeBond}
@@ -280,7 +290,10 @@ function Bond() {
                 </div>
                 <div className="w-full grid gap-y-4">
                     <div>
-                        <h3>You get</h3>
+                        <h3>You get <span className="text-xs font-thin">
+                                            {" "}
+                                            (4% discount included){" "}
+                                        </span></h3>
                     </div>
                     <div className="relative flex-center-between">
                         <input
@@ -301,6 +314,7 @@ function Bond() {
                             NIIT
                         </span>
                     </div>
+                    {showError && <p className="text-red"> {error}</p> }
                 </div>
 
                 <button

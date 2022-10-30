@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { Header } from "../../components";
 import { Web3Context } from "../../contexts/Web3Context";
 import tokenLogo from "../../assets/png/nahmii-logo.png";
+import { toast } from "react-toastify";
+const toastConfig = { autoClose: 5000, theme: "dark", position: "bottom-left" };
 const guides = [
     {
         sn: 0,
@@ -39,6 +41,9 @@ function Stake() {
         stakeTokens,
         withdrawStakedTokens,
     } = useContext(Web3Context);
+     const[showError1, setShowError1] = useState(false)
+     const[showError2, setShowError2] = useState(false)
+    const [error, setError] = useState('')
     const [balance, setBalance] = useState(0);
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
@@ -73,12 +78,28 @@ function Stake() {
         if (validStake) {
             stakeTokens(amount);
             setAmount("");
+        }else if(!validStake && connected) {
+            setError("Invalid stake amount");
+             setShowError1(true)
+            setTimeout(()=>{
+                setShowError1(false)
+            }, 2000)
+        } else if (!connected) {
+           toast.error("Connect your wallet to activate button", toastConfig);
         }
     };
     const onWithdraw = () => {
         if (validWithdrawal) {
-            withdrawStakedTokens(amount);
+            withdrawStakedTokens(withdrawAmount);
             setWithdrawAmount("");
+        } else if(!validWithdrawal && connected) {
+            setError("Invalid withdrawal amount");
+             setShowError2(true)
+            setTimeout(()=>{
+                setShowError2(false)
+            }, 2000)
+        } else if (!connected) {
+           toast.error("Connect your wallet to activate button", toastConfig);
         }
     };
 
@@ -215,6 +236,7 @@ function Stake() {
                                     NIIT
                                 </span>
                             </div>
+                            {showError1 && <p className="text-red"> {error}</p> }
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
@@ -266,6 +288,7 @@ function Stake() {
                                     NIIT
                                 </span>
                             </div>
+                            {showError2 && <p className="text-red"> {error}</p> }
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
@@ -277,6 +300,7 @@ function Stake() {
                                 Confirm
                             </button>
                         </div>
+                        
                     </div>
                 )}
             </section>
