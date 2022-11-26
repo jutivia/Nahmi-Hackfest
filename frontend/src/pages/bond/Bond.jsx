@@ -36,8 +36,8 @@ function Bond() {
     const [NiiTAmount, setNiiTAmount] = useState("");
     const [bondToken, setBond] = useState(0);
     const activeGuide = guides[current];
-    const[showError, setShowError] = useState(false)
-    const [error, setError] = useState('')
+    const [showError, setShowError] = useState(false);
+    const [error, setError] = useState("");
     const { sn, header, message } = activeGuide;
     const {
         accountBalance,
@@ -57,7 +57,7 @@ function Bond() {
     const [time, setTimeLeft] = useState({
         days: 0,
         hours: 0,
-        munites: 0,
+        minutes: 0,
         seconds: 0,
     });
     const validInput =
@@ -108,7 +108,7 @@ function Bond() {
         setMature(maturity);
         setShowText(true);
     };
-    
+
     useEffect(() => {
         setCountdown(timeLeft);
     }, [timeLeft]);
@@ -135,14 +135,14 @@ function Bond() {
             bondAST(amount);
             setAmount("");
             setNiiTAmount("");
-        }else if(!validInput && connected) {
+        } else if (!validInput && connected) {
             setError("Invalid AST amount");
-            setShowError(true)
-            setTimeout(()=>{
-                setShowError(false)
-            }, 2000)
+            setShowError(true);
+            setTimeout(() => {
+                setShowError(false);
+            }, 2000);
         } else if (!connected) {
-           toast.error("Connect your wallet to activate button", toastConfig);
+            toast.error("Connect your wallet to activate button", toastConfig);
         }
     };
 
@@ -159,24 +159,24 @@ function Bond() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex-center-evenly px-[5%] h-full w-full "
+            className="flex items-center justify-evenly lg:justify-evenly flex-col lg:flex-row px-[5%] flex-1 w-full"
         >
-            <section>
+            <section className="w-full max-w-[30rem] lg:max-w-[40rem]">
                 <Header
                     header="Bond"
                     description=" Bond your assets and earn NIIT tokens at a discount."
                 />
 
-                <div className=" flex-start-start mt-8 max-w-[40rem] h-28 glass p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">
+                <div className="flex-start-start mt-8 w-full max-w-[30rem] lg:max-w-[40rem] mx-auto h-min-content min-h-[10rem] lg:min-h-[unset] lg:max-h-28 glass p-4 sm:p-8 rounded-tl-2xl rounded-tr-2xl flex-col text-white">
                     <div className="flex-center-start gap-x-4 mb-2">
-                        <span className="text-cerulean font-bold">{`${sn + 1}/${
-                            guides.length
-                        }`}</span>
+                        <span className="hidden md:block text-cerulean font-bold">{`${
+                            sn + 1
+                        }/${guides.length}`}</span>
                         <h2 className=" font-bold capitalize">{header}</h2>
                     </div>
                     <p>{message}</p>
                 </div>
-                <div className="flex-center-center max-w-[40rem] gap-x-8 glass bg-richBlack rounded-br-2xl rounded-bl-2xl p-8">
+                <div className="flex-center-center w-full max-w-[30rem] lg:max-w-[40rem] mx-auto gap-x-8 glass bg-richBlack rounded-br-2xl rounded-bl-2xl p-8">
                     {guides.map((guide) => (
                         <span
                             key={guide.sn}
@@ -253,7 +253,7 @@ function Bond() {
                 )}
             </section>
 
-            <section className="page-content flex-center-between flex-col py-12 w-5/12 text-white">
+            <section className="glass p-8 lg:p-8 rounded-xl flex-center-between flex-col lg:w-5/12 text-white gap-y-8 ">
                 <h2 className="font-bold text-left w-full text-cerulean text-xl mb-4">
                     Bond Asset
                 </h2>
@@ -290,10 +290,13 @@ function Bond() {
                 </div>
                 <div className="w-full grid gap-y-4">
                     <div>
-                        <h3>You get <span className="text-xs font-thin">
-                                            {" "}
-                                            (4% discount included){" "}
-                                        </span></h3>
+                        <h3>
+                            You get{" "}
+                            <span className="text-xs font-thin">
+                                {" "}
+                                (4% discount included){" "}
+                            </span>
+                        </h3>
                     </div>
                     <div className="relative flex-center-between">
                         <input
@@ -314,7 +317,7 @@ function Bond() {
                             NIIT
                         </span>
                     </div>
-                    {showError && <p className="text-red"> {error}</p> }
+                    {showError && <p className="text-red"> {error}</p>}
                 </div>
 
                 <button

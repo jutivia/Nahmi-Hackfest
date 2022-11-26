@@ -41,9 +41,9 @@ function Stake() {
         stakeTokens,
         withdrawStakedTokens,
     } = useContext(Web3Context);
-     const[showError1, setShowError1] = useState(false)
-     const[showError2, setShowError2] = useState(false)
-    const [error, setError] = useState('')
+    const [showError1, setShowError1] = useState(false);
+    const [showError2, setShowError2] = useState(false);
+    const [error, setError] = useState("");
     const [balance, setBalance] = useState(0);
     const activeGuide = guides[current];
     const { sn, header, message } = activeGuide;
@@ -78,28 +78,28 @@ function Stake() {
         if (validStake) {
             stakeTokens(amount);
             setAmount("");
-        }else if(!validStake && connected) {
+        } else if (!validStake && connected) {
             setError("Invalid stake amount");
-             setShowError1(true)
-            setTimeout(()=>{
-                setShowError1(false)
-            }, 2000)
+            setShowError1(true);
+            setTimeout(() => {
+                setShowError1(false);
+            }, 2000);
         } else if (!connected) {
-           toast.error("Connect your wallet to activate button", toastConfig);
+            toast.error("Connect your wallet to activate button", toastConfig);
         }
     };
     const onWithdraw = () => {
         if (validWithdrawal) {
             withdrawStakedTokens(withdrawAmount);
             setWithdrawAmount("");
-        } else if(!validWithdrawal && connected) {
+        } else if (!validWithdrawal && connected) {
             setError("Invalid withdrawal amount");
-             setShowError2(true)
-            setTimeout(()=>{
-                setShowError2(false)
-            }, 2000)
+            setShowError2(true);
+            setTimeout(() => {
+                setShowError2(false);
+            }, 2000);
         } else if (!connected) {
-           toast.error("Connect your wallet to activate button", toastConfig);
+            toast.error("Connect your wallet to activate button", toastConfig);
         }
     };
 
@@ -117,7 +117,7 @@ function Stake() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex-center-evenly px-[5%] h-full w-full"
+            className="flex items-center justify-evenly lg:justify-evenly flex-col lg:flex-row px-[5%] flex-1 w-full"
         >
             <section>
                 <Header
@@ -155,7 +155,7 @@ function Stake() {
                 )}
             </section>
 
-            <section className="page-content flex-center-start gap-y-12 flex-col py-12 w-5/12 text-white">
+            <section className="glass flex-center-start gap-y-8 flex-col p-8 lg:p-8 lg:w-5/12 rounded-xl text-white">
                 <div className="flex-center-start gap-x-8">
                     <div className="relative px-4">
                         <button
@@ -236,7 +236,7 @@ function Stake() {
                                     NIIT
                                 </span>
                             </div>
-                            {showError1 && <p className="text-red"> {error}</p> }
+                            {showError1 && <p className="text-red"> {error}</p>}
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
@@ -288,7 +288,7 @@ function Stake() {
                                     NIIT
                                 </span>
                             </div>
-                            {showError2 && <p className="text-red"> {error}</p> }
+                            {showError2 && <p className="text-red"> {error}</p>}
                         </div>
                         <div className="flex-center-center mt-8">
                             <button
@@ -300,7 +300,6 @@ function Stake() {
                                 Confirm
                             </button>
                         </div>
-                        
                     </div>
                 )}
             </section>
